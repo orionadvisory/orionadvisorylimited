@@ -250,6 +250,7 @@ export function OnboardingAssessment({
                   onChange={handleChange}
                   assessmentId={assessmentId}
                   attachmentValue={answers[`${question.questionKey}__file`]}
+                  answers={answers}
                 />
               ))}
             </div>

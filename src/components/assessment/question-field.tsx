@@ -66,9 +66,17 @@ export function shouldShow(question: Question, answers: Answers): boolean {
 }
 
 /** Check if a question should show a file attachment option */
-function shouldShowAttachment(question: Question): boolean {
+function shouldShowAttachment(question: Question, answers: Answers): boolean {
   // Explicit flag in options
-  if (question.options?.allowAttachment) return true;
+  if (question.options?.allowAttachment) {
+    const attachIf = question.options.attachmentIf as { equals?: string } | undefined;
+    if (attachIf?.equals) {
+      const val = answers[question.questionKey];
+      const answer = Array.isArray(val) ? val[0] : val;
+      return answer === attachIf.equals;
+    }
+    return true;
+  }
   // Detect from description keywords
   if (!question.description) return false;
   const desc = question.description.toLowerCase();
@@ -78,7 +86,20 @@ function shouldShowAttachment(question: Question): boolean {
     "upload or provide", "upload copies", "upload registration",
     "upload your", "upload or link",
   ];
-  return attachKeywords.some((kw) => desc.includes(kw));
+  const hasKeyword = attachKeywords.some((kw) => desc.includes(kw));
+  if (!hasKeyword) return false;
+
+  // For yes/no questions, only show upload when answer is "Yes"
+  if (question.inputType === "select" && question.options?.choices) {
+    const choices = (question.options.choices as string[]).map(c => c.toLowerCase());
+    if (choices.includes("yes") && choices.includes("no")) {
+      const val = answers[question.questionKey];
+      const answer = Array.isArray(val) ? val[0] : val;
+      return answer?.toLowerCase() === "yes";
+    }
+  }
+
+  return true;
 }
 
 const inputClass =
@@ -434,6 +455,7 @@ export function QuestionCard({
   onChange,
   assessmentId,
   attachmentValue,
+  answers = {},
 }: {
   question: Question;
   index: number;
@@ -441,8 +463,9 @@ export function QuestionCard({
   onChange: (key: string, val: string | string[]) => void;
   assessmentId?: string;
   attachmentValue?: string | string[] | undefined;
+  answers?: Answers;
 }) {
-  const showAttachment = shouldShowAttachment(question) && question.inputType !== "file_upload";
+  const showAttachment = shouldShowAttachment(question, answers) && question.inputType !== "file_upload";
 
   return (
     <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:shadow-md">

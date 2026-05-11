@@ -70,6 +70,23 @@ export async function getUploadUrl(
   return getSignedUrl(s3, command, { expiresIn });
 }
 
+/** Download a file from R2 as a Buffer. */
+export async function getFileBuffer(key: string): Promise<Buffer> {
+  const response = await s3.send(
+    new GetObjectCommand({
+      Bucket: R2_BUCKET_NAME,
+      Key: key,
+    })
+  );
+  const stream = response.Body as ReadableStream | NodeJS.ReadableStream;
+  const chunks: Uint8Array[] = [];
+  // @ts-expect-error - works for both Node readable and web streams
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 /** Delete a file from R2. */
 export async function deleteFile(key: string) {
   await s3.send(

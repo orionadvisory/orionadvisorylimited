@@ -7,6 +7,7 @@ import {
   assessmentAnswers,
   legalIssues,
   recommendations,
+  users,
 } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -109,6 +110,12 @@ export async function POST(req: Request) {
       });
     }
   }
+
+  // Mark onboarding as completed
+  await db
+    .update(users)
+    .set({ onboardingCompleted: true, updatedAt: new Date() })
+    .where(eq(users.id, userId));
 
   return Response.json({ success: true, assessmentId: assessment.id });
 }

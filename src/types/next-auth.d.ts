@@ -6,6 +6,7 @@ declare module "next-auth" {
       id: string;
       role: "member" | "admin";
       status: "active" | "suspended";
+      onboardingCompleted: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -15,5 +16,6 @@ declare module "next-auth/jwt" {
     id?: string;
     role?: "member" | "admin";
     status?: "active" | "suspended";
+    onboardingCompleted?: boolean;
   }
 }

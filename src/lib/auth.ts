@@ -59,15 +59,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id;
       }
 
-       if (token.id && (user || !token.role || !token.status)) {
+      if (token.id && (user || !token.role || !token.status || !token.onboardingCompleted)) {
         const [dbUser] = await db
-          .select({ role: users.role, status: users.status })
+          .select({
+            role: users.role,
+            status: users.status,
+            onboardingCompleted: users.onboardingCompleted,
+          })
           .from(users)
           .where(eq(users.id, token.id as string))
           .limit(1);
 
         token.role = dbUser?.role ?? "member";
         token.status = dbUser?.status ?? "active";
+        token.onboardingCompleted = dbUser?.onboardingCompleted ?? false;
       }
 
       return token;
@@ -77,6 +82,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = (token.role as "member" | "admin") ?? "member";
         session.user.status = (token.status as "active" | "suspended") ?? "active";
+        session.user.onboardingCompleted = (token.onboardingCompleted as boolean) ?? false;
       }
       return session;
     },
@@ -84,29 +90,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isLoggedIn = !!auth?.user;
       const { pathname } = request.nextUrl;
 
-      // Protected routes
+      // Route classification
       const isAppRoute =
         pathname.startsWith("/dashboard") || pathname.startsWith("/onboarding");
       const isAdminCreate = pathname === "/admin/create";
       const isAdminRoute = pathname.startsWith("/admin") && !isAdminCreate;
       const isAuthRoute =
         pathname.startsWith("/login") || pathname.startsWith("/signup");
+      const isOnboardingRoute = pathname.startsWith("/onboarding");
       const isActiveAdmin =
         auth?.user?.role === "admin" && auth.user.status === "active";
+      const hasCompletedOnboarding = auth?.user?.onboardingCompleted === true;
 
+      // Unauthenticated → login
       if (isAppRoute && !isLoggedIn) {
         return Response.redirect(new URL("/login", request.url));
       }
 
-      // /admin/create is public (self-locking via page logic)
       if (isAdminRoute && !isLoggedIn) {
         return Response.redirect(new URL("/login", request.url));
       }
 
+      // Onboarding enforcement: incomplete users can only access /onboarding
+      if (isLoggedIn && !hasCompletedOnboarding && !isOnboardingRoute && !isAuthRoute && !isAdminCreate) {
+        return Response.redirect(new URL("/onboarding", request.url));
+      }
+
+      // Completed users can't go back to /onboarding
+      if (isLoggedIn && hasCompletedOnboarding && isOnboardingRoute) {
+        return Response.redirect(new URL("/dashboard", request.url));
+      }
+
+      // Admin route protection
       if (isAdminRoute && !isActiveAdmin) {
         return Response.redirect(new URL("/dashboard", request.url));
       }
 
+      // Logged-in users don't need auth pages
       if (isAuthRoute && isLoggedIn) {
         return Response.redirect(new URL("/dashboard", request.url));
       }

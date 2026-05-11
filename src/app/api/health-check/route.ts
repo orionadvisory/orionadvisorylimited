@@ -12,6 +12,8 @@ import {
 } from "@/lib/db/schema";
 import { eq, inArray, asc } from "drizzle-orm";
 import OpenAI from "openai";
+import { getFileBuffer } from "@/lib/storage/r2";
+import { extractText } from "@/lib/extract-text";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -90,6 +92,38 @@ export async function POST(req: Request) {
     }
   }
 
+  // Process uploaded documents for AI analysis
+  let fileContext = "";
+  const fileAnswers = Object.entries(answers).filter(([key]) => key.endsWith("__file"));
+
+  if (fileAnswers.length > 0) {
+    fileContext += `\n═══════════════════════════════════════\n`;
+    fileContext += `UPLOADED DOCUMENTS\n`;
+    fileContext += `═══════════════════════════════════════\n`;
+
+    for (const [key, val] of fileAnswers) {
+      if (!val || typeof val !== "string") continue;
+      try {
+        const { fileName, storageKey } = JSON.parse(val) as {
+          uploadId: string;
+          fileName: string;
+          storageKey: string;
+        };
+        const parentKey = key.replace("__file", "");
+        const parentQuestion = questions.find((q) => q.questionKey === parentKey);
+
+        const fileBuffer = await getFileBuffer(storageKey);
+        const textContent = await extractText(fileBuffer, fileName);
+
+        fileContext += `\nDocument for: "${parentQuestion?.prompt ?? parentKey}"\n`;
+        fileContext += `File: ${fileName}\n`;
+        fileContext += `Content:\n${textContent}\n\n`;
+      } catch (e) {
+        console.error(`Failed to process file ${key}:`, e);
+      }
+    }
+  }
+
   // Collect domains from answered questions
   const answeredDomains = [
     ...new Set(
@@ -110,7 +144,7 @@ YOU ARE A SENIOR LEGAL ADVISORY TEAM WITH 50 YEARS OF COMBINED EXPERIENCE IN STA
 You have been retained to perform a comprehensive legal health assessment for a startup. Below is the structured intake questionnaire completed by the founder. Analyse every answer carefully and deliver your assessment.
 
 ${briefSections}
-
+${fileContext}
 ═══════════════════════════════════════
 LEGAL DOMAINS COVERED
 ═══════════════════════════════════════
@@ -157,6 +191,7 @@ ASSESSMENT RULES:
 6. priorityActions should be ordered by urgency and impact.
 7. Write for founders — plain language, no jargon, explain why things matter.
 8. If an answer is "No" to a question about having a document or compliance item, that's a gap — assess accordingly.
+9. If documents were uploaded, analyse their content — flag missing clauses, non-standard terms, compliance gaps, or structural issues. Reference specific findings from the documents in your assessment.
 
 Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
 

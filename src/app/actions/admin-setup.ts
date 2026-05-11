@@ -79,6 +79,7 @@ export async function createBootstrapAdmin(
     passwordHash,
     role: "admin",
     status: "active",
+    onboardingCompleted: true,
   });
 
   return { error: null, success: true };
