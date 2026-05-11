@@ -6,9 +6,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm font-bold">O</span>
-          </div>
+          <img src="/images/logo/2.svg" alt="Orion" className="w-7 h-7" />
           <span className="text-base font-semibold text-gray-900 tracking-tight">Orion</span>
         </Link>
         <div className="flex items-center gap-6">
