@@ -210,7 +210,7 @@ export function AssessmentFlow({
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <img src="/images/logo/2.svg" alt="Orion" className="w-7 h-7" />
+              <img src="/images/logo/icon.svg" alt="Orion" className="w-7 h-7" />
               <span className="text-sm font-semibold text-gray-900">
                 {template.name}
               </span>

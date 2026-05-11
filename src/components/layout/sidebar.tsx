@@ -132,7 +132,7 @@ function SidebarContent({
           className="flex items-center gap-2.5"
           onClick={onNavigate}
         >
-          <img src="/images/logo/2.svg" alt="Orion" className="w-7 h-7 flex-shrink-0" />
+          <img src="/images/logo/icon.svg" alt="Orion" className="w-7 h-7 flex-shrink-0" />
           {!collapsed && (
             <span className="text-base font-semibold text-gray-900 tracking-tight">
               Orion{isAdmin ? " Admin" : ""}
