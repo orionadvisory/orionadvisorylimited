@@ -111,8 +111,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return Response.redirect(new URL("/login", request.url));
       }
 
-      // Onboarding enforcement: incomplete users can only access /onboarding
-      if (isLoggedIn && !hasCompletedOnboarding && !isOnboardingRoute && !isAuthRoute && !isAdminCreate) {
+      // Onboarding enforcement: incomplete users can only access /onboarding (admins exempt)
+      if (isLoggedIn && !hasCompletedOnboarding && !isActiveAdmin && !isOnboardingRoute && !isAuthRoute && !isAdminCreate) {
         return Response.redirect(new URL("/onboarding", request.url));
       }
 
