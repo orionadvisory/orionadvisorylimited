@@ -8,6 +8,7 @@ import {
   boolean,
   jsonb,
   pgEnum,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -338,6 +339,35 @@ export const assessmentTemplateRules = pgTable("assessment_template_rules", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
 });
+
+// ─── Assessment Drafts (saved in-progress) ──────────────
+
+export const assessmentDrafts = pgTable(
+  "assessment_drafts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    templateId: uuid("template_id")
+      .notNull()
+      .references(() => assessmentTemplates.id, { onDelete: "cascade" }),
+    answers: jsonb("answers").$type<Record<string, string | string[]>>().notNull(),
+    currentSectionIdx: integer("current_section_idx").default(0).notNull(),
+    completedSectionIds: jsonb("completed_section_ids")
+      .$type<string[]>()
+      .default([])
+      .notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("assessment_drafts_user_template_uniq").on(
+      table.userId,
+      table.templateId
+    ),
+  ]
+);
 
 // ─── Chat History (AI Conversations) ─────────────────────
 
