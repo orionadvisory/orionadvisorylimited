@@ -1,43 +1,28 @@
+import { Compass, ListChecks, Rocket } from "lucide-react";
+
 const steps = [
-  {
-    step: "01",
-    title: "Tell us about your startup",
-    description:
-      "Share your stage, jurisdiction, and goals. Orion maps out exactly what legal steps you need — and in what order.",
-  },
-  {
-    step: "02",
-    title: "Follow a structured path",
-    description:
-      "Work through guided legal journeys for incorporation, fundraising, or ongoing operations. No guesswork, no confusion.",
-  },
-  {
-    step: "03",
-    title: "Close deals and scale",
-    description:
-      "Move from setup to investment rounds with expert legal support and an AI co-pilot that keeps you informed at every step.",
-  },
+  { number: "01", icon: Compass, title: "Show us the chaos", description: "Tell us your stage, location, and goals. No legal vocabulary test required." },
+  { number: "02", icon: ListChecks, title: "Get the game plan", description: "See what matters now, what can wait, and exactly what to tackle next." },
+  { number: "03", icon: Rocket, title: "Build without the fog", description: "Follow guided workflows, bring in experts, and keep every legal loose end visible." },
 ];
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-20">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">How Orion works</h2>
-          <p className="text-gray-500 mt-3 max-w-lg mx-auto">
-            A simple, guided process — so you always know where you stand and what comes next.
-          </p>
+    <section className="bg-[#17211b] px-4 py-20 text-[#fffaf0] sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+          <div><p className="mb-4 font-black uppercase text-[#ffd84d]">How it works</p><h2 className="display-type max-w-3xl text-balance text-4xl leading-tight sm:text-5xl lg:text-6xl">Three steps. Zero mysterious billable hours.</h2></div>
+          <p className="max-w-md text-pretty text-[#fffaf0]/70 lg:text-right">A visible path from legal question mark to properly sorted.</p>
         </div>
-        <div className="grid grid-cols-3 gap-8">
-          {steps.map((step) => (
-            <div key={step.step} className="text-center">
-              <div className="text-4xl font-bold text-indigo-100 mb-4">{step.step}</div>
-              <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
-            </div>
+        <ol className="relative mt-14 grid gap-8 lg:grid-cols-3">
+          <div className="absolute left-[15%] right-[15%] top-12 hidden border-t-2 border-dashed border-[#fffaf0]/40 lg:block" aria-hidden="true" />
+          {steps.map(({ number, icon: Icon, title, description }, index) => (
+            <li key={number} className="relative z-10 flex gap-5 lg:block">
+              <div className={`grid size-20 shrink-0 place-items-center rounded-full border-2 border-[#fffaf0] text-[#17211b] shadow-[4px_4px_0_#fffaf0] lg:size-24 ${index === 0 ? "bg-[#ffd84d]" : index === 1 ? "bg-[#ff9c87]" : "bg-[#9ee8c2]"}`}><Icon className="size-8 lg:size-10" aria-hidden="true" /></div>
+              <div className="pt-1 lg:pt-8"><p className="text-xs font-black text-[#ffd84d]">STEP {number}</p><h3 className="display-type mt-2 text-balance text-2xl sm:text-3xl">{title}</h3><p className="mt-3 max-w-sm text-pretty leading-relaxed text-[#fffaf0]/70">{description}</p></div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

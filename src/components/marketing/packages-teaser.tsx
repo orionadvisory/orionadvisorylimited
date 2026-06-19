@@ -1,61 +1,21 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 const packages = [
-  {
-    name: "Launch",
-    tagline: "Incorporate and structure your company",
-    featured: false,
-  },
-  {
-    name: "Fund",
-    tagline: "Structure your raise and close your round",
-    featured: true,
-  },
-  {
-    name: "Scale",
-    tagline: "Full legal operations as you grow",
-    featured: false,
-  },
+  { name: "Launch", note: "Make it real", tagline: "Incorporate and structure your company properly from day one.", items: ["Company setup", "Founder foundations"], color: "bg-[#fffaf0]" },
+  { name: "Fund", note: "Investor-ready", tagline: "Structure the raise, handle diligence, and get the deal closed.", items: ["Deal structure", "Round support"], color: "bg-[#ffd84d]", featured: true },
+  { name: "Scale", note: "Keep growing", tagline: "Put reliable legal operations behind your next stage of growth.", items: ["Ongoing support", "Contracts & compliance"], color: "bg-[#9ee8c2]" },
 ];
 
 export default function PackagesTeaser() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-20 text-center">
-      <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">
-        Three packages, built for where you are
-      </h2>
-      <p className="text-gray-500 max-w-lg mx-auto mb-10">
-        Launch your company, raise your round, or get full legal operations in place. Pick the
-        package that fits your stage.
-      </p>
-      <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto text-left">
-        {packages.map((pkg) => (
-          <div
-            key={pkg.name}
-            className={`p-6 rounded-2xl border ${
-              pkg.featured
-                ? "border-indigo-300 bg-indigo-50"
-                : "border-gray-200 bg-white"
-            }`}
-          >
-            {pkg.featured && (
-              <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wide">
-                Most popular
-              </span>
-            )}
-            <h3 className="text-lg font-bold text-gray-900 mt-1">{pkg.name}</h3>
-            <p className="text-sm text-gray-500 mt-1">{pkg.tagline}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-8">
-        <Link
-          href="/pricing"
-          className="inline-flex items-center gap-2 border border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
-        >
-          See full pricing <ArrowRight className="w-4 h-4" />
-        </Link>
+    <section className="border-y-2 border-[#17211b] bg-white px-4 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center"><p className="mb-4 font-black uppercase text-[#ff6b4a]">Pick your chapter</p><h2 className="display-type mx-auto max-w-3xl text-balance text-4xl leading-tight sm:text-5xl lg:text-6xl">Legal help that fits where you are.</h2><p className="mx-auto mt-5 max-w-xl text-pretty text-lg text-[#59645c]">No giant menu. No guessing which service you need.</p></div>
+        <div className="mt-12 grid items-start gap-7 lg:grid-cols-3">
+          {packages.map((pkg) => <article key={pkg.name} className={`rough-card relative p-7 sm:p-8 ${pkg.color} ${pkg.featured ? "lg:-translate-y-4" : ""}`}>{pkg.featured && <span className="absolute -right-3 -top-4 rotate-3 rounded-full border-2 border-[#17211b] bg-[#ff6b4a] px-3 py-1.5 text-xs font-black text-white">FOUNDER FAVE</span>}<p className="text-xs font-black uppercase">{pkg.note}</p><h3 className="display-type mt-3 text-4xl">{pkg.name}</h3><p className="mt-4 min-h-12 text-pretty leading-relaxed text-[#3f4a43]">{pkg.tagline}</p><ul className="mt-6 space-y-3 border-t-2 border-dashed border-[#17211b]/30 pt-6">{pkg.items.map(item => <li key={item} className="flex items-center gap-2 text-sm font-bold"><Check className="size-4" aria-hidden="true" />{item}</li>)}</ul></article>)}
+        </div>
+        <div className="mt-12 text-center"><Link href="/pricing" className="sticker-shadow inline-flex items-center gap-2 rounded-full border-2 border-[#17211b] bg-[#84b6f4] px-7 py-4 font-black transition-transform duration-150 hover:-translate-y-1">Compare all packages <ArrowRight className="size-5" aria-hidden="true" /></Link></div>
       </div>
     </section>
   );

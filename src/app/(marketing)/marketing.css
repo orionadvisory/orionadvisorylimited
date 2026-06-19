@@ -1,0 +1,80 @@
+.marketing-page {
+  --paper: #fffaf0;
+  --ink: #17211b;
+  --coral: #ff6b4a;
+  --yellow: #ffd84d;
+  --mint: #9ee8c2;
+  --blue: #84b6f4;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(23, 33, 27, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 33, 27, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.marketing-page .display-type {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 900;
+}
+
+.marketing-page .ink-border {
+  border: 2px solid var(--ink);
+}
+
+.marketing-page .sticker-shadow {
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.marketing-page .sticker-shadow-sm {
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.marketing-page .rough-card {
+  border: 2px solid var(--ink);
+  border-radius: 1.5rem 1.25rem 1.6rem 1.15rem;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.marketing-page .scribble-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.marketing-page .scribble-underline::after {
+  position: absolute;
+  right: -0.1em;
+  bottom: -0.14em;
+  left: -0.1em;
+  height: 0.22em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24' preserveAspectRatio='none'%3E%3Cpath d='M3 17C57 3 101 21 151 11c50-10 93 8 146-5' fill='none' stroke='%23ff6b4a' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  content: "";
+}
+
+.marketing-page .wiggle-arrow {
+  animation: nudge 1.8s ease-in-out infinite;
+}
+
+.marketing-page :focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translateX(0) rotate(-2deg); }
+  50% { transform: translateX(5px) rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marketing-page .wiggle-arrow {
+    animation: none;
+  }
+
+  .marketing-page *,
+  .marketing-page *::before,
+  .marketing-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

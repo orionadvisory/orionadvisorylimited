@@ -1,61 +1,33 @@
-import { Building2, TrendingUp, Sparkles } from "lucide-react";
+import { Bot, Building2, Handshake } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-type Pillar = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-};
-
-const pillars: Pillar[] = [
-  {
-    icon: Building2,
-    title: "Startup Setup & Structuring",
-    description:
-      "Incorporate in the UK, US, or Nigeria (including Free Zones). Set up founder agreements, share structure, and governance — built to hold up when investors look closely.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Fundraising & Deal Support",
-    description:
-      "Structure deals, review term sheets, close SAFE and convertible rounds, and navigate due diligence. We help founders actually close investment, not just manage paperwork.",
-  },
-  {
-    icon: Sparkles,
-    title: "Ongoing Legal + AI Co-pilot",
-    description:
-      "Continuous support for contracts, compliance, and regulatory matters — with an AI assistant that helps you understand what to do next and when to bring in an expert.",
-  },
+const pillars: { icon: LucideIcon; kicker: string; title: string; description: string; color: string; tilt: string }[] = [
+  { icon: Building2, kicker: "01 · SET UP", title: "Build on solid ground", description: "Incorporate, sort founder equity, and put governance in place before the cracks appear.", color: "bg-[#ffd84d]", tilt: "lg:rotate-[-2deg]" },
+  { icon: Handshake, kicker: "02 · RAISE", title: "Close the round", description: "Get term sheets, SAFEs, diligence, and deal structure handled without losing the plot.", color: "bg-[#ff9c87]", tilt: "lg:translate-y-6 lg:rotate-1" },
+  { icon: Bot, kicker: "03 · GROW", title: "Stay legally awake", description: "Contracts, compliance, expert backup, and an AI co-pilot that knows when to call a human.", color: "bg-[#9ee8c2]", tilt: "lg:rotate-[-1deg]" },
 ];
 
 export default function PillarsSection() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-20">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
-          Everything founders need, legally
-        </h2>
-        <p className="text-gray-500 mt-3 max-w-lg mx-auto">
-          Orion covers the full startup lifecycle — from setting up your company to raising
-          capital and operating at scale.
-        </p>
-      </div>
-      <div className="grid grid-cols-3 gap-6">
-        {pillars.map((pillar) => {
-          const Icon = pillar.icon;
-          return (
-            <div
-              key={pillar.title}
-              className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-4">
-                <Icon className="w-5 h-5 text-indigo-600" />
+    <section className="px-4 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <p className="mb-4 font-black uppercase text-[#ff6b4a]">The useful bits</p>
+          <h2 className="display-type text-balance text-4xl leading-tight sm:text-5xl lg:text-6xl">From “we have an idea” to “we closed the round.”</h2>
+          <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-[#59645c]">One legal home for the messy, exciting, slightly terrifying business of building a startup.</p>
+        </div>
+        <div className="mt-12 grid gap-7 lg:grid-cols-3 lg:gap-8">
+          {pillars.map(({ icon: Icon, kicker, title, description, color, tilt }) => (
+            <article key={title} className={`rough-card ${color} ${tilt} p-6 sm:p-8`}>
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-xs font-black">{kicker}</span>
+                <span className="grid size-14 rotate-3 place-items-center rounded-full border-2 border-[#17211b] bg-white"><Icon className="size-7" aria-hidden="true" /></span>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{pillar.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{pillar.description}</p>
-            </div>
-          );
-        })}
+              <h3 className="display-type mt-12 text-balance text-3xl leading-tight">{title}</h3>
+              <p className="mt-4 text-pretty leading-relaxed text-[#344039]">{description}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
