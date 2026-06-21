@@ -1,15 +1,15 @@
 .marketing-page {
-  --paper: #fffaf0;
+  --paper: #fdfbf7;
   --ink: #17211b;
-  --coral: #ff6b4a;
-  --yellow: #ffd84d;
-  --mint: #9ee8c2;
-  --blue: #84b6f4;
+  --coral: #e95f44;
+  --yellow: #f4d66f;
+  --mint: #a9ddc3;
+  --blue: #a7c8ed;
   background-color: var(--paper);
   background-image:
-    linear-gradient(rgba(23, 33, 27, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 33, 27, 0.035) 1px, transparent 1px);
-  background-size: 28px 28px;
+    linear-gradient(rgba(23, 33, 27, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 33, 27, 0.018) 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--ink);
   overflow: hidden;
 }
@@ -20,21 +20,21 @@
 }
 
 .marketing-page .ink-border {
-  border: 2px solid var(--ink);
+  border: 1px solid rgba(23, 33, 27, 0.3);
 }
 
 .marketing-page .sticker-shadow {
-  box-shadow: 5px 5px 0 var(--ink);
+  box-shadow: 0 8px 24px rgba(23, 33, 27, 0.14);
 }
 
 .marketing-page .sticker-shadow-sm {
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: 0 4px 12px rgba(23, 33, 27, 0.12);
 }
 
 .marketing-page .rough-card {
-  border: 2px solid var(--ink);
-  border-radius: 1.5rem 1.25rem 1.6rem 1.15rem;
-  box-shadow: 5px 5px 0 var(--ink);
+  border: 1px solid rgba(23, 33, 27, 0.22);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 32px rgba(23, 33, 27, 0.09);
 }
 
 .marketing-page .scribble-underline {
@@ -53,17 +53,16 @@
 }
 
 .marketing-page .wiggle-arrow {
-  animation: nudge 1.8s ease-in-out infinite;
+  transition: transform 150ms ease;
+}
+
+.marketing-page a:hover .wiggle-arrow {
+  transform: translateX(3px);
 }
 
 .marketing-page :focus-visible {
-  outline: 3px solid var(--coral);
+  outline: 2px solid var(--coral);
   outline-offset: 3px;
-}
-
-@keyframes nudge {
-  0%, 100% { transform: translateX(0) rotate(-2deg); }
-  50% { transform: translateX(5px) rotate(2deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

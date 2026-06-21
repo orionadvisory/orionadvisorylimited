@@ -1,79 +1,98 @@
-import { CheckCircle2, ArrowRight } from "lucide-react";
-import { SERVICES } from "@/lib/data/services";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, Check } from "lucide-react";
+import { SERVICES } from "@/lib/data/services";
+
+export const metadata: Metadata = {
+  title: "Legal Packages | Orion",
+  description: "Clear, flat-fee legal packages for launching, funding, and scaling your company.",
+};
+
+const cardColors = ["bg-white", "bg-[#f4d66f]/45", "bg-[#a9ddc3]/45"];
 
 export default function PricingPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="text-center mb-14">
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-4">
-          Three packages, built for your stage
-        </h1>
-        <p className="text-gray-500 max-w-lg mx-auto">
-          From setting up your company to closing your first round — flat-fee pricing with no
-          hourly surprises. Pick the package that fits where you are.
-        </p>
-      </div>
+    <div className="px-4 py-16 sm:px-6 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 font-black uppercase text-[#e95f44]">Straightforward packages</p>
+          <h1 className="display-type text-balance text-4xl leading-tight sm:text-5xl lg:text-6xl">
+            Legal support built for your stage.
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-[#59645c]">
+            From setting up your company to closing your first round, get a clear scope and a
+            flat fee without hourly surprises.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {SERVICES.map((service) => (
-          <div
-            key={service.id}
-            className={`relative bg-white rounded-2xl border p-8 ${
-              service.popular
-                ? "border-indigo-300 shadow-lg"
-                : "border-gray-100 shadow-sm"
-            }`}
-          >
-            {service.popular && (
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
-                Most Popular
-              </div>
-            )}
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-gray-900">{service.name}</h3>
-              <p className="text-gray-500 text-sm mt-1">{service.description}</p>
-              <div className="mt-5">
-                <span className="text-4xl font-bold text-gray-900">
-                  ${service.price.toLocaleString()}
-                </span>
-                <span className="text-gray-400 text-sm ml-1">one-time</span>
-              </div>
-            </div>
-
-            <Link
-              href="/signup"
-              className={`block w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors mb-6 ${
-                service.popular
-                  ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                  : "border border-gray-200 text-gray-700 hover:bg-gray-50"
-              }`}
+        <div className="mx-auto mt-14 grid max-w-6xl gap-7 lg:grid-cols-3">
+          {SERVICES.map((service, index) => (
+            <article
+              key={service.id}
+              className={`rough-card relative flex flex-col p-7 sm:p-8 ${cardColors[index]}`}
             >
-              {service.cta} {service.cta !== "Contact Us" && <ArrowRight className="inline w-3.5 h-3.5 ml-1" />}
-            </Link>
+              {service.popular && (
+                <span className="absolute -top-4 right-5 rounded-full bg-[#e95f44] px-3 py-1.5 text-xs font-bold text-white shadow-sm">
+                  MOST POPULAR
+                </span>
+              )}
 
-            <ul className="space-y-3">
-              {service.features.map((feature) => (
-                <li key={feature} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-600">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+              <div>
+                <p className="text-xs font-black uppercase text-[#59645c]">For your next stage</p>
+                <h2 className="display-type mt-3 text-4xl">{service.name}</h2>
+                <p className="mt-3 min-h-12 text-pretty leading-relaxed text-[#3f4a43]">
+                  {service.description}
+                </p>
+                <div className="mt-6 border-b border-[#17211b]/15 pb-6">
+                  <span className="display-type text-4xl tabular-nums">
+                    ${service.price.toLocaleString()}
+                  </span>
+                  <span className="ml-2 text-sm text-[#59645c]">one-time</span>
+                </div>
+              </div>
 
-      {/* FAQ teaser */}
-      <div className="text-center mt-14 space-y-2">
-        <p className="text-gray-500 text-sm">
-          Not sure which package is right for you?{" "}
-          <a href="#" className="text-indigo-600 font-medium hover:underline">
-            Talk to our team
-          </a>
-        </p>
-        <p className="text-xs text-gray-400">
-          We support founders in the UK, US, Nigeria, and Free Zones.
+              <ul className="mt-6 flex-1 space-y-3">
+                {service.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-[#17211b] text-white">
+                      <Check className="size-3" aria-hidden="true" />
+                    </span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/signup"
+                className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition-colors ${
+                  service.popular
+                    ? "bg-[#17211b] text-white hover:bg-[#2b3830]"
+                    : "border border-[#17211b]/30 bg-white/70 hover:bg-white"
+                }`}
+              >
+                {service.cta}
+                <ArrowRight className="wiggle-arrow size-4" aria-hidden="true" />
+              </Link>
+            </article>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-14 max-w-2xl rounded-2xl border border-[#17211b]/15 bg-white/70 px-6 py-7 text-center shadow-sm">
+          <h2 className="display-type text-2xl">Not sure which package fits?</h2>
+          <p className="mt-2 text-sm leading-relaxed text-[#59645c]">
+            Start with a free five-minute health check. We’ll show you what needs attention and
+            which support makes sense.
+          </p>
+          <Link
+            href="/health-check"
+            className="mt-5 inline-flex items-center gap-2 border-b border-[#17211b] pb-1 font-bold hover:border-[#e95f44]"
+          >
+            Check my legal health <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
+
+        <p className="mt-8 text-center text-xs text-[#59645c]">
+          Supporting founders in the UK, US, Nigeria, and selected Free Zones.
         </p>
       </div>
     </div>
