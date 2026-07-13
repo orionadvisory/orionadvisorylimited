@@ -76,10 +76,18 @@ export function useAssessmentDraft({
     async (payload: DraftPayload) => {
       setSaveState("saving");
       try {
-        const { updatedAt } = await saveDraft(templateId, payload);
-        setLastSavedAt(updatedAt);
+        const res = await saveDraft(templateId, payload);
+        if ("error" in res) {
+          // eslint-disable-next-line no-console
+          console.error("Draft save failed:", res.error);
+          setSaveState("error");
+          return;
+        }
+        setLastSavedAt(res.updatedAt);
         setSaveState("saved");
-      } catch {
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("Draft save threw:", err);
         setSaveState("error");
       }
     },

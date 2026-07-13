@@ -46,34 +46,45 @@ export async function getDraft(templateId: string): Promise<DraftRecord | null> 
   };
 }
 
+export type SaveDraftResult = { updatedAt: Date } | { error: string };
+
 export async function saveDraft(
   templateId: string,
   payload: DraftPayload
-): Promise<{ updatedAt: Date }> {
-  const userId = await requireUserId();
-  const now = new Date();
+): Promise<SaveDraftResult> {
+  try {
+    const userId = await requireUserId();
+    const now = new Date();
 
-  await db
-    .insert(assessmentDrafts)
-    .values({
-      userId,
-      templateId,
-      answers: payload.answers,
-      currentSectionIdx: payload.currentSectionIdx,
-      completedSectionIds: payload.completedSectionIds,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: [assessmentDrafts.userId, assessmentDrafts.templateId],
-      set: {
+    await db
+      .insert(assessmentDrafts)
+      .values({
+        userId,
+        templateId,
         answers: payload.answers,
         currentSectionIdx: payload.currentSectionIdx,
         completedSectionIds: payload.completedSectionIds,
         updatedAt: now,
-      },
-    });
+      })
+      .onConflictDoUpdate({
+        target: [assessmentDrafts.userId, assessmentDrafts.templateId],
+        set: {
+          answers: payload.answers,
+          currentSectionIdx: payload.currentSectionIdx,
+          completedSectionIds: payload.completedSectionIds,
+          updatedAt: now,
+        },
+      });
 
-  return { updatedAt: now };
+    return { updatedAt: now };
+  } catch (err) {
+    // Server-action errors are redacted in prod, so return the message as data
+    // (and log it server-side) instead of throwing.
+    console.error("saveDraft failed:", err);
+    return {
+      error: err instanceof Error ? err.message : "Unknown error saving draft",
+    };
+  }
 }
 
 export async function clearDraft(templateId: string): Promise<void> {
