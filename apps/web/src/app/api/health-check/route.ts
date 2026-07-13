@@ -17,6 +17,9 @@ import { extractText } from "@orion/core/extract-text";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// AI calls can run long; give the function headroom (Vercel default is 10s).
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   const { templateId, answers } = (await req.json()) as {
     templateId: string;

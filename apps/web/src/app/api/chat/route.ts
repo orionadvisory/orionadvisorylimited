@@ -44,6 +44,9 @@ function buildContextMessage(
   return context;
 }
 
+// AI calls can run long; give the function headroom (Vercel default is 10s).
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user?.id) {

@@ -28,6 +28,24 @@ interface OnboardingAssessmentProps {
   questions: Question[];
 }
 
+// Safely read a JSON response. If the server returns non-JSON (e.g. a Vercel
+// timeout/error HTML page), surface a clear message instead of a raw
+// "Unexpected token '<'" JSON parse error.
+async function readJson(res: Response, fallbackMessage: string) {
+  const text = await res.text();
+  try {
+    const data = text ? JSON.parse(text) : null;
+    if (!res.ok) throw new Error(data?.error || fallbackMessage);
+    return data;
+  } catch (e) {
+    if (e instanceof Error && e.message && !e.message.includes("JSON")) throw e;
+    if (res.status === 504 || res.status === 408) {
+      throw new Error("This took too long and timed out. Please try again.");
+    }
+    throw new Error(`${fallbackMessage} (server error ${res.status}).`);
+  }
+}
+
 export function OnboardingAssessment({
   template,
   sections,
@@ -133,11 +151,7 @@ export function OnboardingAssessment({
           answers: draft.answers,
         }),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Assessment failed");
-      }
-      const result = await res.json();
+      const result = await readJson(res, "Assessment failed");
 
       const persistRes = await fetch("/api/onboarding/complete", {
         method: "POST",
@@ -148,10 +162,7 @@ export function OnboardingAssessment({
           result,
         }),
       });
-      if (!persistRes.ok) {
-        const err = await persistRes.json();
-        throw new Error(err.error || "Failed to save results");
-      }
+      await readJson(persistRes, "Failed to save results");
 
       await draft.clearAndReset();
       router.push("/dashboard");

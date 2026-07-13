@@ -8,6 +8,9 @@ import { uploadFile } from "@orion/core/storage/r2";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// AI calls can run long; give the function headroom (Vercel default is 10s).
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user?.id) {
