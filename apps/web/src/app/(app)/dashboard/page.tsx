@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         startupName={startup?.name}
         startupStage={startup?.stage}
       />
-      <div className="p-6 space-y-6">
+      <div className="space-y-5 p-4 sm:p-5 lg:p-6">
         <WelcomeBanner
           firstName={firstName}
           startupName={startup?.name || null}
@@ -56,8 +56,8 @@ export default async function DashboardPage() {
           riskScore={startup?.riskScore ?? null}
         />
         <ReevaluateButton />
-        <div className="grid grid-cols-3 gap-6">
-          <div className="col-span-2 space-y-6">
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
+          <div className="space-y-5">
             <RecentDocuments docs={recentDocs} />
             <QuickActions />
           </div>

@@ -13,22 +13,14 @@ interface RecentDoc {
   createdAt: Date;
 }
 
-const statusConfig: Record<string, { label: string; variant: "success" | "warning" | "info" | "default" }> = {
-  ready: { label: "Ready", variant: "success" },
-  draft: { label: "Draft", variant: "warning" },
-  generating: { label: "Generating", variant: "info" },
-  signed: { label: "Signed", variant: "success" },
-  expired: { label: "Expired", variant: "default" },
-};
-
 export default function RecentDocuments({ docs }: { docs: RecentDoc[] }) {
   return (
-    <Card>
+    <Card className="border-stone-200/80 bg-white/85 shadow-md shadow-stone-900/[0.04] backdrop-blur">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Recent Documents</CardTitle>
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle className="text-stone-950">Recent Documents</CardTitle>
           <Link href="/dashboard/documents">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="text-stone-600 hover:bg-stone-100 hover:text-stone-950">
               View all <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>
@@ -36,10 +28,10 @@ export default function RecentDocuments({ docs }: { docs: RecentDoc[] }) {
       </CardHeader>
       <CardContent>
         {docs.length === 0 ? (
-          <div className="text-center py-6">
-            <FileText className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">No documents yet</p>
-            <p className="text-xs text-gray-400 mt-1">
+          <div className="rounded-lg border border-dashed border-stone-200 bg-stone-50/60 py-8 text-center">
+            <FileText className="w-8 h-8 text-stone-300 mx-auto mb-2" />
+            <p className="text-sm text-stone-600">No documents yet</p>
+            <p className="text-xs text-stone-500 mt-1">
               Generate your first legal document to get started
             </p>
             <Link href="/dashboard/documents">
@@ -51,28 +43,27 @@ export default function RecentDocuments({ docs }: { docs: RecentDoc[] }) {
         ) : (
           <div className="space-y-2">
             {docs.map((doc) => {
-              const status = statusConfig[doc.status] || statusConfig.draft;
               return (
                 <Link
                   key={doc.id}
                   href="/dashboard/documents"
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                  className="group flex items-center gap-3 rounded-lg border border-transparent p-3 transition-colors hover:border-stone-200 hover:bg-stone-50/80"
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    doc.source === "uploaded" ? "bg-emerald-50" : "bg-indigo-50"
+                    doc.source === "uploaded" ? "bg-emerald-50" : "bg-amber-50"
                   }`}>
                     {doc.source === "uploaded" ? (
-                      <Upload className="w-4 h-4 text-emerald-500" />
+                      <Upload className="w-4 h-4 text-emerald-600" />
                     ) : (
-                      <Sparkles className="w-4 h-4 text-indigo-500" />
+                      <Sparkles className="w-4 h-4 text-amber-600" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate group-hover:text-indigo-600 transition-colors">
+                    <p className="text-sm font-medium text-stone-950 truncate group-hover:text-emerald-700 transition-colors">
                       {doc.name}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      {doc.type} · {new Date(doc.createdAt).toLocaleDateString()}
+                    <p className="text-xs text-stone-500">
+                      {doc.type} / {new Date(doc.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <Badge variant={doc.source === "uploaded" ? "success" : "info"}>

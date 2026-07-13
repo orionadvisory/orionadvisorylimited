@@ -11,19 +11,19 @@ export default function ActiveWorkflowCard() {
   const currentStep = activeWorkflow?.steps.find((s) => s.status === "in_progress");
 
   return (
-    <Card>
+    <Card className="border-stone-200/80 bg-white/85 shadow-md shadow-stone-900/[0.04] backdrop-blur">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Active Workflow</CardTitle>
-            <p className="text-sm text-gray-400 mt-0.5">{activeWorkflow?.title}</p>
+            <p className="text-sm text-stone-500 mt-0.5">{activeWorkflow?.title}</p>
           </div>
           <Badge variant="info">In Progress</Badge>
         </div>
       </CardHeader>
       <CardContent>
         <div className="mb-4">
-          <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+          <div className="flex justify-between text-xs text-stone-500 mb-1.5">
             <span>{activeWorkflow?.progress}% complete</span>
             <span>
               {activeWorkflow?.steps.filter((s) => s.status === "completed").length}/
@@ -41,8 +41,8 @@ export default function ActiveWorkflowCard() {
                   step.status === "completed"
                     ? "bg-emerald-500"
                     : step.status === "in_progress"
-                    ? "bg-indigo-600"
-                    : "bg-gray-100"
+                    ? "bg-amber-500"
+                    : "bg-stone-100"
                 }`}
               >
                 {step.status === "completed" && (
@@ -52,16 +52,16 @@ export default function ActiveWorkflowCard() {
                   <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
                 )}
                 {step.status === "pending" && (
-                  <div className="w-2 h-2 bg-gray-300 rounded-full" />
+                  <div className="w-2 h-2 bg-stone-300 rounded-full" />
                 )}
               </div>
               <span
                 className={`text-sm ${
                   step.status === "completed"
-                    ? "text-gray-400 line-through"
+                    ? "text-stone-400 line-through"
                     : step.status === "in_progress"
-                    ? "text-gray-900 font-medium"
-                    : "text-gray-400"
+                    ? "text-stone-950 font-medium"
+                    : "text-stone-400"
                 }`}
               >
                 {step.title}
@@ -73,9 +73,9 @@ export default function ActiveWorkflowCard() {
           ))}
         </div>
 
-        <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
-          <p className="text-sm text-gray-500">
-            Next: <span className="text-gray-900 font-medium">{currentStep?.title}</span>
+        <div className="mt-5 pt-4 border-t border-stone-100 flex items-center justify-between">
+          <p className="text-sm text-stone-500">
+            Next: <span className="text-stone-950 font-medium">{currentStep?.title}</span>
           </p>
           <Link href="/dashboard/workflows">
             <Button size="sm">

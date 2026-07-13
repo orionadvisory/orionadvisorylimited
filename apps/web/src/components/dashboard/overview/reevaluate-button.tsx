@@ -58,42 +58,42 @@ export default function ReevaluateButton() {
     const trendColor = improved
       ? "text-emerald-600"
       : unchanged
-        ? "text-gray-500"
-        : "text-red-600";
+        ? "text-stone-500"
+        : "text-rose-600";
     const trendBg = improved
       ? "bg-emerald-50 border-emerald-200"
       : unchanged
-        ? "bg-gray-50 border-gray-200"
-        : "bg-red-50 border-red-200";
+        ? "bg-stone-50 border-stone-200"
+        : "bg-rose-50 border-rose-200";
 
     return (
-      <Card className="overflow-hidden">
-        <div className="p-6">
-          <div className="flex items-start justify-between mb-4">
+      <Card className="overflow-hidden border-stone-200/80 bg-white/85 shadow-md shadow-stone-900/[0.04] backdrop-blur">
+        <div className="p-4 sm:p-6">
+          <div className="flex items-start justify-between gap-3 mb-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-600" />
-              <h3 className="text-base font-semibold text-gray-900">
+              <Sparkles className="w-5 h-5 text-amber-600" />
+              <h3 className="text-base font-semibold text-stone-950">
                 Legal Health Re-evaluation
               </h3>
             </div>
             <button
               onClick={() => setResult(null)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-stone-400 hover:text-stone-700"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Score comparison */}
-          <div className="flex items-center gap-6 mb-5">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-5">
             <div className="text-center">
-              <p className="text-xs text-gray-400 mb-1">Previous</p>
-              <p className="text-2xl font-bold text-gray-400">{result.previousScore}</p>
+              <p className="text-xs text-stone-500 mb-1">Previous</p>
+              <p className="text-2xl font-bold text-stone-400">{result.previousScore}</p>
             </div>
-            <ArrowRight className="w-5 h-5 text-gray-300" />
+            <ArrowRight className="w-5 h-5 text-stone-300" />
             <div className="text-center">
-              <p className="text-xs text-gray-400 mb-1">New Score</p>
-              <p className="text-2xl font-bold text-gray-900">{result.overallScore}</p>
+              <p className="text-xs text-stone-500 mb-1">New Score</p>
+              <p className="text-2xl font-bold text-stone-950">{result.overallScore}</p>
             </div>
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${trendBg}`}>
               <TrendIcon className={`w-4 h-4 ${trendColor}`} />
@@ -105,17 +105,17 @@ export default function ReevaluateButton() {
           </div>
 
           {/* Commentary */}
-          <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-4">
-            <p className="text-sm text-indigo-900 leading-relaxed">
+          <div className="bg-emerald-50/70 border border-emerald-100 rounded-lg p-4 mb-4">
+            <p className="text-sm text-emerald-950 leading-relaxed">
               {result.commentary}
             </p>
           </div>
 
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-gray-400">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-stone-500">
               Based on {result.generatedDocCount} document{result.generatedDocCount !== 1 ? "s" : ""} generated
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button variant="ghost" size="sm" onClick={() => setResult(null)}>
                 Dismiss
               </Button>
@@ -132,15 +132,15 @@ export default function ReevaluateButton() {
   }
 
   return (
-    <Card>
-      <div className="p-5 flex items-center justify-between">
+    <Card className="border-stone-200/80 bg-white/85 shadow-md shadow-stone-900/[0.04] backdrop-blur">
+      <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-indigo-50 rounded-lg flex items-center justify-center">
-            <RefreshCw className="w-4 h-4 text-indigo-600" />
+          <div className="w-10 h-10 bg-emerald-50 rounded-lg border border-emerald-100 flex items-center justify-center">
+            <RefreshCw className="w-4 h-4 text-emerald-700" />
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-900">Re-evaluate Legal Health</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-sm font-semibold text-stone-950">Re-evaluate Legal Health</p>
+            <p className="text-xs text-stone-500">
               Run a fresh AI assessment including your generated documents
             </p>
           </div>
@@ -149,6 +149,7 @@ export default function ReevaluateButton() {
           size="sm"
           onClick={handleReevaluate}
           disabled={loading}
+          className="w-full sm:w-auto"
         >
           {loading ? (
             <>
@@ -165,7 +166,7 @@ export default function ReevaluateButton() {
       </div>
       {error && (
         <div className="px-5 pb-4">
-          <p className="text-xs text-red-600">{error}</p>
+          <p className="text-xs text-rose-600">{error}</p>
         </div>
       )}
     </Card>

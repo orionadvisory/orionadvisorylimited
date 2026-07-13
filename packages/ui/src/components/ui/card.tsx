@@ -3,7 +3,7 @@ import { cn } from "@orion/ui/utils";
 export function Card({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("bg-white border border-gray-100 rounded-xl shadow-sm", className)}
+      className={cn("bg-white border border-stone-200 rounded-lg shadow-sm", className)}
       {...props}
     >
       {children}
@@ -21,7 +21,7 @@ export function CardHeader({ className, children, ...props }: React.HTMLAttribut
 
 export function CardTitle({ className, children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={cn("text-base font-semibold text-gray-900", className)} {...props}>
+    <h3 className={cn("text-base font-semibold text-stone-950", className)} {...props}>
       {children}
     </h3>
   );
@@ -29,7 +29,7 @@ export function CardTitle({ className, children, ...props }: React.HTMLAttribute
 
 export function CardDescription({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn("text-sm text-gray-500 mt-0.5", className)} {...props}>
+    <p className={cn("text-sm text-stone-500 mt-0.5", className)} {...props}>
       {children}
     </p>
   );

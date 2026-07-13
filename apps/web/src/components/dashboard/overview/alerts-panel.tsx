@@ -11,11 +11,11 @@ interface Issue {
 }
 
 const severityConfig: Record<string, { icon: typeof AlertTriangle; bg: string; iconClass: string }> = {
-  critical: { icon: AlertTriangle, bg: "bg-red-50 border-red-100", iconClass: "text-red-600" },
-  high: { icon: AlertTriangle, bg: "bg-amber-50 border-amber-100", iconClass: "text-amber-600" },
-  medium: { icon: Info, bg: "bg-blue-50 border-blue-100", iconClass: "text-blue-600" },
-  low: { icon: CheckCircle2, bg: "bg-gray-50 border-gray-100", iconClass: "text-gray-500" },
-  info: { icon: Info, bg: "bg-gray-50 border-gray-100", iconClass: "text-gray-500" },
+  critical: { icon: AlertTriangle, bg: "bg-rose-50 border-rose-100", iconClass: "text-rose-700" },
+  high: { icon: AlertTriangle, bg: "bg-amber-50 border-amber-100", iconClass: "text-amber-700" },
+  medium: { icon: Info, bg: "bg-teal-50 border-teal-100", iconClass: "text-teal-700" },
+  low: { icon: CheckCircle2, bg: "bg-stone-50 border-stone-100", iconClass: "text-stone-500" },
+  info: { icon: Info, bg: "bg-stone-50 border-stone-100", iconClass: "text-stone-500" },
 };
 
 export default function AlertsPanel({ issues }: { issues: Issue[] }) {
@@ -26,19 +26,21 @@ export default function AlertsPanel({ issues }: { issues: Issue[] }) {
     .slice(0, 5);
 
   return (
-    <Card className="h-full">
+    <Card className="h-full border-stone-200/80 bg-white/85 shadow-md shadow-stone-900/[0.04] backdrop-blur">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>Alerts</CardTitle>
-          <Zap className="w-4 h-4 text-amber-500" />
+          <CardTitle className="text-stone-950">Alerts</CardTitle>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-700">
+            <Zap className="w-4 h-4" />
+          </div>
         </div>
       </CardHeader>
       <CardContent>
         {sorted.length === 0 ? (
-          <div className="text-center py-6">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">No active issues</p>
-            <p className="text-xs text-gray-400 mt-1">
+          <div className="rounded-lg border border-emerald-100 bg-emerald-50/60 px-4 py-8 text-center">
+            <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+            <p className="text-sm font-medium text-emerald-900">No active issues</p>
+            <p className="text-xs text-emerald-700/80 mt-1">
               Run a health check to assess your legal standing
             </p>
           </div>
@@ -55,15 +57,15 @@ export default function AlertsPanel({ issues }: { issues: Issue[] }) {
                   <div className="flex items-start gap-2.5">
                     <Icon className={`w-4 h-4 flex-shrink-0 mt-0.5 ${config.iconClass}`} />
                     <div>
-                      <p className="text-xs font-semibold text-gray-900">{issue.title}</p>
-                      <p className="text-xs text-gray-500 mt-0.5 capitalize">
-                        {issue.severity} · {issue.domain.replace("_", " ")}
+                      <p className="text-xs font-semibold text-stone-950">{issue.title}</p>
+                      <p className="text-xs text-stone-500 mt-0.5 capitalize">
+                        {issue.severity} / {issue.domain.replace("_", " ")}
                       </p>
                       <Link
                         href="/dashboard/ai"
-                        className="text-xs text-indigo-600 font-medium mt-1.5 hover:underline inline-block"
+                        className="text-xs text-emerald-700 font-medium mt-1.5 hover:underline inline-block"
                       >
-                        Ask AI for help →
+                        Ask AI for help
                       </Link>
                     </div>
                   </div>

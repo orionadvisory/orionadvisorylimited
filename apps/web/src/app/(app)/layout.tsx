@@ -21,7 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <SidebarProvider userName={userInfo.name} userEmail={userInfo.email}>
-      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-indigo-50/40">
+      <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,83,45,0.08),transparent_28rem),linear-gradient(135deg,#fbf7ef_0%,#f7f3ec_45%,#eef4ef_100%)]">
         <PersistGuestCheck />
         <Sidebar user={userInfo} startup={startupInfo} />
         <MainContent>{children}</MainContent>
