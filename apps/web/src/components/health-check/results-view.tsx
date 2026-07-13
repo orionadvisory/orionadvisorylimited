@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Logo } from "@orion/ui/components/ui/logo";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@orion/ui/components/ui/button";
@@ -258,7 +259,7 @@ export default function ResultsView() {
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/logo/icon.svg" alt="Orion" className="w-7 h-7" />
+            <Logo size={28} />
             <span className="text-sm font-semibold text-gray-900">
               Your Legal Health Report
             </span>

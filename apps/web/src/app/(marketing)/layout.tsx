@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "@orion/ui/components/ui/logo";
 import { ArrowUpRight, Menu } from "lucide-react";
 import "./marketing.css";
 
@@ -10,7 +10,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6" aria-label="Main navigation">
           <Link href="/" className="flex items-center gap-2.5 font-black">
             <span className="grid size-10 place-items-center rounded-xl border border-[#17211b]/20 bg-[#f4d66f] shadow-sm">
-              <Image src="/images/logo/icon.svg" alt="" width={24} height={24} />
+              <Logo size={24} />
             </span>
             <span className="text-xl">Orion</span>
           </Link>

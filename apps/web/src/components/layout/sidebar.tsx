@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, createContext, useContext } from "react";
+import { Logo } from "@orion/ui/components/ui/logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -132,7 +133,7 @@ function SidebarContent({
           className="flex items-center gap-2.5"
           onClick={onNavigate}
         >
-          <img src="/images/logo/icon.svg" alt="Orion" className="w-7 h-7 flex-shrink-0" />
+          <Logo size={28} className="flex-shrink-0" />
           {!collapsed && (
             <span className="text-base font-semibold text-gray-900 tracking-tight">
               Orion{isAdmin ? " Admin" : ""}
