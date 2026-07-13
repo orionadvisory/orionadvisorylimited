@@ -133,7 +133,7 @@ function SidebarContent({
           className="flex items-center gap-2.5"
           onClick={onNavigate}
         >
-          <Logo size={28} className="flex-shrink-0" />
+          <Logo size={34} className="flex-shrink-0" />
           {!collapsed && (
             <span className="text-base font-semibold text-white tracking-tight">
               Orion{isAdmin ? " Admin" : ""}

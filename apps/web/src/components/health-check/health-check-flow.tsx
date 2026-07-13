@@ -300,7 +300,7 @@ export default function HealthCheckFlow() {
         <div className="max-w-2xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Logo size={28} />
+              <Logo size={34} />
               <span className="text-sm font-semibold text-white">Legal Health Check</span>
             </div>
             <div className="flex items-center gap-2">

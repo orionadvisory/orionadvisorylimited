@@ -6,9 +6,10 @@ import { cn } from "@orion/ui/utils";
  * that background, so the mark itself is rendered without its own chip.
  */
 export function Logo({
-  size = 28,
+  size = 32,
   className,
 }: {
+  /** Rendered height in px; width follows the logo's natural aspect ratio. */
   size?: number;
   className?: string;
 }) {
@@ -16,7 +17,7 @@ export function Logo({
     <img
       src="/images/logo/orion-new-logo.png"
       alt="Orion"
-      style={{ width: size, height: size }}
+      style={{ height: size, width: "auto" }}
       className={cn("object-contain", className)}
     />
   );

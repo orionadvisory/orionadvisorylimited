@@ -259,7 +259,7 @@ export default function ResultsView() {
       <div className="bg-[#1a1a2e] border-b border-white/10">
         <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Logo size={28} />
+            <Logo size={34} />
             <span className="text-sm font-semibold text-white">
               Your Legal Health Report
             </span>
