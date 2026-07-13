@@ -148,7 +148,14 @@ export function useAssessmentDraft({
       clearTimeout(debounceRef.current);
       debounceRef.current = null;
     }
-    await clearDraft(templateId);
+    // Best-effort: a failed draft clear must never surface an error on an
+    // assessment that has already been saved.
+    try {
+      await clearDraft(templateId);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("clearDraft failed (ignored):", err);
+    }
   }, [templateId]);
 
   return {

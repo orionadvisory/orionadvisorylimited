@@ -7,6 +7,12 @@ import { SERVICES } from "@/lib/data/services";
 export default function ServicePackages() {
   return (
     <div className="space-y-8">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+        <p className="text-sm font-medium text-amber-800">
+          Coming soon — our service packages are still being finalized. Have a
+          look below; checkout isn&apos;t open yet.
+        </p>
+      </div>
       <div>
         <div className="mb-5">
           <h2 className="text-base font-semibold text-gray-900">Choose a package</h2>
@@ -48,10 +54,11 @@ export default function ServicePackages() {
                   ))}
                 </ul>
                 <Button
-                  variant={service.popular ? "primary" : "outline"}
+                  variant="outline"
                   className="w-full"
+                  disabled
                 >
-                  {service.cta}
+                  Coming soon
                 </Button>
               </CardContent>
             </Card>

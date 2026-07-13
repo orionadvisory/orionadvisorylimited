@@ -31,6 +31,13 @@ export async function POST(req: Request) {
       return Response.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    // Startup name captured at the start of onboarding (see StartupNameStep).
+    const startupName =
+      typeof answers.__startup_name === "string" &&
+      answers.__startup_name.trim()
+        ? answers.__startup_name.trim()
+        : "My Startup";
+
     // Get or create startup for this user
     let [startup] = await db
       .select()
@@ -43,14 +50,18 @@ export async function POST(req: Request) {
         .insert(startups)
         .values({
           userId,
-          name: "My Startup",
+          name: startupName,
           riskScore: result.overallScore ?? null,
         })
         .returning();
     } else {
       await db
         .update(startups)
-        .set({ riskScore: result.overallScore, updatedAt: new Date() })
+        .set({
+          name: startupName,
+          riskScore: result.overallScore,
+          updatedAt: new Date(),
+        })
         .where(eq(startups.id, startup.id));
     }
 

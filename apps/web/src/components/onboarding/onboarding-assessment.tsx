@@ -185,6 +185,16 @@ export function OnboardingAssessment({
     return <SubmittingScreen />;
   }
 
+  // Capture the startup name up front so it shows on the dashboard and docs.
+  const startupName = ((draft.answers["__startup_name"] as string) || "").trim();
+  if (!startupName) {
+    return (
+      <StartupNameStep
+        onContinue={(name) => draft.setAnswer("__startup_name", name)}
+      />
+    );
+  }
+
   const isLastSection = draft.currentSectionIdx === totalSections - 1;
 
   return (
@@ -317,6 +327,62 @@ function SubmittingScreen() {
         <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
           <Loader2 className="w-3.5 h-3.5 animate-spin" />
           This usually takes 15-30 seconds
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StartupNameStep({
+  onContinue,
+}: {
+  onContinue: (name: string) => void;
+}) {
+  const [name, setName] = useState("");
+  const trimmed = name.trim();
+
+  return (
+    <div className="min-h-screen bg-[#fafafa] flex flex-col">
+      <div className="sticky top-0 z-10 bg-[#1a1a2e] border-b border-white/10">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-2">
+          <Logo size={34} />
+          <span className="text-sm font-semibold text-white">
+            Legal Health Check
+          </span>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center px-6">
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-1">
+            What&apos;s your startup called?
+          </h1>
+          <p className="text-sm text-gray-500 mb-6">
+            We&apos;ll use this across your dashboard and generated documents.
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (trimmed) onContinue(trimmed);
+            }}
+            className="space-y-4"
+          >
+            <input
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Acme Inc."
+              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-50"
+            />
+            <Button
+              type="submit"
+              disabled={!trimmed}
+              className="w-full"
+              size="md"
+            >
+              Continue
+            </Button>
+          </form>
         </div>
       </div>
     </div>

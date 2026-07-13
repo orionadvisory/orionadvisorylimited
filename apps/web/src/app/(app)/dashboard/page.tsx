@@ -4,7 +4,6 @@ import StatsGrid from "@/components/dashboard/overview/stats-grid";
 import QuickActions from "@/components/dashboard/overview/quick-actions";
 import AlertsPanel from "@/components/dashboard/overview/alerts-panel";
 import RecentDocuments from "@/components/dashboard/overview/recent-documents";
-import ReevaluateButton from "@/components/dashboard/overview/reevaluate-button";
 import { getDashboardData } from "@/app/actions/dashboard";
 
 export default async function DashboardPage() {
@@ -55,7 +54,6 @@ export default async function DashboardPage() {
           criticalCount={stats.criticalCount}
           riskScore={startup?.riskScore ?? null}
         />
-        <ReevaluateButton />
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="space-y-5">
             <RecentDocuments docs={recentDocs} />
