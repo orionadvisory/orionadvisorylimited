@@ -9,7 +9,7 @@ import {
   recommendations,
   users,
 } from "@orion/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import {
   normalizeSeverity,
   normalizeResolutionPath,
@@ -54,17 +54,38 @@ export async function POST(req: Request) {
         .where(eq(startups.id, startup.id));
     }
 
-    // Create assessment record
-    const [assessment] = await db
-      .insert(assessments)
-      .values({
-        startupId: startup.id,
-        status: "completed",
-        overallScore: result.overallScore,
-        riskLevel: normalizeSeverity(result.riskLevel),
-        completedAt: new Date(),
-      })
-      .returning();
+    // Finalize the in-progress assessment created by /api/assessments/start
+    // if one exists; otherwise create a fresh completed record. This avoids
+    // leaving an orphaned draft alongside a duplicate completed row.
+    const [draft] = await db
+      .select()
+      .from(assessments)
+      .where(
+        and(
+          eq(assessments.startupId, startup.id),
+          eq(assessments.templateId, templateId),
+          eq(assessments.status, "in_progress")
+        )
+      )
+      .limit(1);
+
+    const assessmentValues = {
+      status: "completed" as const,
+      overallScore: result.overallScore,
+      riskLevel: normalizeSeverity(result.riskLevel),
+      completedAt: new Date(),
+    };
+
+    const [assessment] = draft
+      ? await db
+          .update(assessments)
+          .set(assessmentValues)
+          .where(eq(assessments.id, draft.id))
+          .returning()
+      : await db
+          .insert(assessments)
+          .values({ startupId: startup.id, templateId, ...assessmentValues })
+          .returning();
 
     // Store raw answers + AI analysis side-by-side
     await db.insert(assessmentAnswers).values({
