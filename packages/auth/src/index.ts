@@ -134,7 +134,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       if (isAdminRoute && !isLoggedIn) {
-        return Response.redirect(webUrl("/login"));
+        // The admin app has its own login on the same origin.
+        return Response.redirect(new URL("/login", request.url));
       }
 
       // Onboarding enforcement: incomplete users can only access /onboarding (admins exempt)

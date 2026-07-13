@@ -58,7 +58,7 @@ export async function logIn(formData: FormData) {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/dashboard",
+      redirectTo: "/admin",
     });
   } catch (error: unknown) {
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
