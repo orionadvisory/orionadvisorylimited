@@ -1,4 +1,3 @@
-import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
 import * as XLSX from "xlsx";
 
@@ -8,9 +7,18 @@ export async function extractText(buffer: Buffer, fileName: string): Promise<str
   const ext = fileName.toLowerCase().split(".").pop();
 
   if (ext === "pdf") {
-    const parser = new PDFParse(buffer);
-    const result = await parser.getText();
-    return result.text.slice(0, MAX_CHARS);
+    // pdf-parse pulls in pdfjs, which references DOM globals (DOMMatrix) at
+    // load time and crashes the serverless runtime. Import it lazily and fail
+    // soft so a PDF upload can never take down the whole assessment.
+    try {
+      const { PDFParse } = await import("pdf-parse");
+      const parser = new PDFParse(buffer);
+      const result = await parser.getText();
+      return result.text.slice(0, MAX_CHARS);
+    } catch (err) {
+      console.error("PDF text extraction failed:", err);
+      return `[PDF uploaded: ${fileName} — text could not be extracted]`;
+    }
   }
 
   if (ext === "docx") {
