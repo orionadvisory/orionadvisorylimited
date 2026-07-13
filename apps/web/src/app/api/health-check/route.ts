@@ -14,6 +14,10 @@ import { eq, inArray, asc } from "drizzle-orm";
 import OpenAI from "openai";
 import { getFileBuffer } from "@orion/core/storage/r2";
 import { extractText } from "@orion/core/extract-text";
+import {
+  normalizeSeverity,
+  normalizeResolutionPath,
+} from "@orion/core/health-check";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -204,19 +208,28 @@ ASSESSMENT RULES:
 
 Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
 
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a senior legal advisory AI embedded in a startup legal platform. You assess startup legal health based on structured questionnaire responses. You MUST respond with valid JSON only — no markdown, no code fences, no commentary before or after the JSON.",
-      },
-      { role: "user", content: prompt },
-    ],
-    temperature: 0.4,
-    max_tokens: 4000,
-  });
+  let completion;
+  try {
+    completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a senior legal advisory AI embedded in a startup legal platform. You assess startup legal health based on structured questionnaire responses. You MUST respond with valid JSON only — no markdown, no code fences, no commentary before or after the JSON.",
+        },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.4,
+      max_tokens: 4000,
+    });
+  } catch (err) {
+    console.error("OpenAI assessment failed:", err);
+    return Response.json(
+      { error: "The AI assessment could not be generated. Please try again." },
+      { status: 502 }
+    );
+  }
 
   const raw = completion.choices[0]?.message?.content;
   if (!raw) {
@@ -282,7 +295,7 @@ Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
           templateId,
           status: "completed",
           overallScore: assessment.overallScore,
-          riskLevel: assessment.riskLevel,
+          riskLevel: normalizeSeverity(assessment.riskLevel),
           completedAt: new Date(),
         })
         .returning();
@@ -297,6 +310,9 @@ Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
 
       // Insert legal issues + recommendations
       for (const issue of assessment.issues ?? []) {
+        const severity = normalizeSeverity(issue.severity);
+        const resolutionPath = normalizeResolutionPath(issue.resolutionPath);
+
         const [dbIssue] = await db
           .insert(legalIssues)
           .values({
@@ -305,8 +321,8 @@ Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
             title: issue.title,
             description: issue.description,
             domain: issue.domain,
-            severity: issue.severity,
-            resolutionPath: issue.resolutionPath,
+            severity,
+            resolutionPath,
           })
           .returning();
 
@@ -315,13 +331,8 @@ Return ONLY the JSON object. No markdown, no code fences, no commentary.`;
             issueId: dbIssue.id,
             title: issue.recommendation.title,
             description: issue.recommendation.description,
-            actionType: issue.resolutionPath,
-            priority:
-              issue.severity === "critical"
-                ? 0
-                : issue.severity === "high"
-                  ? 1
-                  : 2,
+            actionType: resolutionPath,
+            priority: severity === "critical" ? 0 : severity === "high" ? 1 : 2,
           });
         }
       }

@@ -8,6 +8,12 @@ export {
   getRelevantDocuments,
 } from "./questions";
 export { buildAssessmentPrompt } from "./scoring";
+export {
+  normalizeSeverity,
+  normalizeResolutionPath,
+  type Severity,
+  type ResolutionPath,
+} from "./normalize";
 export type {
   Domain,
   ProfileData,
