@@ -256,11 +256,11 @@ export default function ResultsView() {
       {showAuthGate && <AuthGateModal onClose={() => setShowAuthGate(false)} />}
 
       {/* Header */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-[#1a1a2e] border-b border-white/10">
         <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Logo size={28} />
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-sm font-semibold text-white">
               Your Legal Health Report
             </span>
             <Badge variant="info" className="ml-2 flex items-center gap-1">
@@ -271,6 +271,7 @@ export default function ResultsView() {
             <Button
               variant="ghost"
               size="sm"
+              className="text-white/80 hover:bg-white/10 hover:text-white"
               onClick={() => router.push("/health-check")}
             >
               <RotateCcw className="w-3.5 h-3.5" /> Retake

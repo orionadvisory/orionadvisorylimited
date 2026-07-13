@@ -9,8 +9,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <header className="relative z-50 border-b border-[#17211b]/15 bg-[#fdfbf7]/95 backdrop-blur-sm">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6" aria-label="Main navigation">
           <Link href="/" className="flex items-center gap-2.5 font-black">
-            <span className="grid size-10 place-items-center rounded-xl border border-[#17211b]/20 bg-[#f4d66f] shadow-sm">
-              <Logo size={24} />
+            <span className="grid size-10 place-items-center rounded-xl border border-[#17211b]/30 bg-[#17211b] shadow-sm">
+              <Logo size={26} />
             </span>
             <span className="text-xl">Orion</span>
           </Link>

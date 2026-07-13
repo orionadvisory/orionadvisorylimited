@@ -127,7 +127,7 @@ function SidebarContent({
   return (
     <>
       {/* Logo */}
-      <div className={cn("py-5 border-b border-indigo-100/40", collapsed ? "px-3" : "px-5")}>
+      <div className={cn("py-5 bg-[#1a1a2e] border-b border-white/10", collapsed ? "px-3" : "px-5")}>
         <Link
           href={isAdmin ? "/admin" : "/dashboard"}
           className="flex items-center gap-2.5"
@@ -135,7 +135,7 @@ function SidebarContent({
         >
           <Logo size={28} className="flex-shrink-0" />
           {!collapsed && (
-            <span className="text-base font-semibold text-gray-900 tracking-tight">
+            <span className="text-base font-semibold text-white tracking-tight">
               Orion{isAdmin ? " Admin" : ""}
             </span>
           )}

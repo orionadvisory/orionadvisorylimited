@@ -1,32 +1,23 @@
 import { cn } from "@orion/ui/utils";
 
 /**
- * Orion logo mark. The logo art is a light teal/white gradient, so it is
- * rendered on a dark navy "chip" to stay legible on any background.
+ * Orion logo mark (light teal/white gradient on transparent). It needs to sit
+ * on a dark surface to read well — the surrounding nav/topbar/header provides
+ * that background, so the mark itself is rendered without its own chip.
  */
 export function Logo({
   size = 28,
   className,
-  rounded = "rounded-lg",
 }: {
   size?: number;
   className?: string;
-  rounded?: string;
 }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center justify-center bg-[#1a1a2e] p-1 shadow-sm",
-        rounded,
-        className
-      )}
+    <img
+      src="/images/logo/orion-new-logo.png"
+      alt="Orion"
       style={{ width: size, height: size }}
-    >
-      <img
-        src="/images/logo/orion-new-logo.png"
-        alt="Orion"
-        className="h-full w-full object-contain"
-      />
-    </span>
+      className={cn("object-contain", className)}
+    />
   );
 }
