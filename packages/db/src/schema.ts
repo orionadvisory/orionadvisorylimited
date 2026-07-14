@@ -549,3 +549,14 @@ export const uploadsRelations = relations(uploads, ({ one }) => ({
 export const auditLogRelations = relations(auditLog, ({ one }) => ({
   user: one(users, { fields: [auditLog.userId], references: [users.id] }),
 }));
+
+// ─── Partner organisations (logos shown in the landing page marquee) ─────
+export const partners = pgTable("partners", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  logoStorageKey: text("logo_storage_key").notNull(),
+  logoContentType: text("logo_content_type").notNull(),
+  orderIndex: integer("order_index").default(0).notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});

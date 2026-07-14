@@ -61,6 +61,7 @@ const adminNavItems = [
   { label: "Manage Users", href: "/admin/users", icon: UserCog },
   { label: "Assessments", href: "/admin/assessments", icon: ClipboardList, exact: true },
   { label: "Submissions", href: "/admin/assessments/submissions", icon: Inbox },
+  { label: "Organizations", href: "/admin/partners", icon: Building2 },
 ];
 
 // ─── Types ──────────────────────────────────────────────
