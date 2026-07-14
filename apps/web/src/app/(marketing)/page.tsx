@@ -9,7 +9,7 @@ import PackagesTeaser from "@/components/marketing/packages-teaser";
 import CtaSection from "@/components/marketing/cta-section";
 
 // Revalidate so newly added partner logos appear without a redeploy.
-export const revalidate = 300;
+export const revalidate = 60;
 
 export default function HomePage() {
   return (

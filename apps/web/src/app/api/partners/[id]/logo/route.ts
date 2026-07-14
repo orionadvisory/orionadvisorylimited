@@ -21,7 +21,7 @@ export async function GET(
     .limit(1);
 
   if (!partner) {
-    return new Response("Not found", { status: 404 });
+    return new Response("partner-not-found", { status: 404 });
   }
 
   try {
@@ -32,7 +32,8 @@ export async function GET(
         "Cache-Control": "public, max-age=86400, immutable",
       },
     });
-  } catch {
-    return new Response("Not found", { status: 404 });
+  } catch (err) {
+    console.error("partner logo fetch from R2 failed:", err);
+    return new Response("logo-fetch-failed", { status: 502 });
   }
 }
