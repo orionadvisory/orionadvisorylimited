@@ -34,6 +34,7 @@ export async function GET(
     });
   } catch (err) {
     console.error("partner logo fetch from R2 failed:", err);
-    return new Response("logo-fetch-failed", { status: 502 });
+    const detail = err instanceof Error ? `${err.name}: ${err.message}` : "unknown";
+    return new Response(`logo-fetch-failed: ${detail}`, { status: 502 });
   }
 }

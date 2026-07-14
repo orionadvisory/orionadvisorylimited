@@ -78,10 +78,18 @@ export async function getFileBuffer(key: string): Promise<Buffer> {
       Key: key,
     })
   );
-  const stream = response.Body as ReadableStream | NodeJS.ReadableStream;
+  const body = response.Body;
+  if (!body) throw new Error("Empty response body from R2");
+
+  // Prefer the SDK's runtime-agnostic helper (works on Node and Vercel);
+  // fall back to async iteration only if it's unavailable.
+  const maybe = body as { transformToByteArray?: () => Promise<Uint8Array> };
+  if (typeof maybe.transformToByteArray === "function") {
+    return Buffer.from(await maybe.transformToByteArray());
+  }
+
   const chunks: Uint8Array[] = [];
-  // @ts-expect-error - works for both Node readable and web streams
-  for await (const chunk of stream) {
+  for await (const chunk of body as AsyncIterable<Uint8Array>) {
     chunks.push(chunk);
   }
   return Buffer.concat(chunks);
