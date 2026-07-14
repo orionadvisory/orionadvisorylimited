@@ -106,12 +106,14 @@
   width: auto;
   max-width: 10rem;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.65;
+  /* Force every logo (white ones included) to a solid black silhouette so it
+     stays visible on the light background. Transparency is preserved. */
+  filter: brightness(0);
+  opacity: 0.8;
   transition: filter 0.2s ease, opacity 0.2s ease;
 }
 .partner-logo:hover {
-  filter: grayscale(0);
+  filter: none;
   opacity: 1;
 }
 @keyframes marquee-scroll {
