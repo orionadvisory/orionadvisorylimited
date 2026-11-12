@@ -14,7 +14,7 @@ const rgba = ([r, g, b]: [number, number, number], a: number) => `rgba(${r},${g}
 /**
  * Canvas engine for the hero sky: parallax star dust, the Orion constellation
  * drawing itself in, domain labels, pointer "connections" and the odd
- * shooting star. Pauses off-screen; renders one still frame for reduced motion.
+ * shooting star. Drawn as ink on paper, like a star chart. Pauses off-screen; renders one still frame for reduced motion.
  */
 export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>) {
   useEffect(() => {
@@ -75,10 +75,10 @@ export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>)
       ctx!.clearRect(0, 0, w, h);
 
       // Star dust with depth-based parallax.
-      ctx!.fillStyle = "#e3f8f1";
+      ctx!.fillStyle = "#0c1a17";
       for (const s of dust) {
         const twinkle = reduced ? 0.8 : 0.55 + 0.45 * Math.sin(t * s.speed + s.phase);
-        ctx!.globalAlpha = twinkle * (0.25 + s.depth * 0.6);
+        ctx!.globalAlpha = twinkle * (0.06 + s.depth * 0.2);
         ctx!.beginPath();
         ctx!.arc(s.x * w - pointer.px * 22 * s.depth, s.y * h - pointer.py * 14 * s.depth, s.r, 0, TAU);
         ctx!.fill();
@@ -101,8 +101,8 @@ export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>)
         const A = pts[a];
         const Z = pts[z];
         const grad = ctx!.createLinearGradient(A.px, A.py, Z.px, Z.py);
-        grad.addColorStop(0, "rgba(159,242,220,0.55)");
-        grad.addColorStop(1, "rgba(159,242,220,0.18)");
+        grad.addColorStop(0, "rgba(8,122,101,0.6)");
+        grad.addColorStop(1, "rgba(8,122,101,0.2)");
         ctx!.globalAlpha = strength;
         ctx!.strokeStyle = grad;
         ctx!.beginPath();
@@ -155,7 +155,7 @@ export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>)
           ctx!.stroke();
         }
 
-        ctx!.fillStyle = "#ffffff";
+        ctx!.fillStyle = "#0c1a17";
         ctx!.beginPath();
         ctx!.arc(p.px, p.py, p.mag * 1.7, 0, TAU);
         ctx!.fill();
@@ -164,7 +164,7 @@ export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>)
           const labelIn = reduced ? 1 : clamp01((t - 2.8 - i * 0.1) / 0.8);
           ctx!.globalAlpha = labelIn * (0.55 + near * 0.45);
           ctx!.font = `500 10px ${mono}`;
-          ctx!.fillStyle = near > 0.1 ? "#19d3ae" : "#9ff2dc";
+          ctx!.fillStyle = near > 0.1 ? "#087a65" : "rgba(12,26,23,0.55)";
           ctx!.fillText(p.label.toUpperCase(), p.px + 14, p.py - 10);
         }
       });
@@ -178,8 +178,8 @@ export function useConstellation(canvasRef: RefObject<HTMLCanvasElement | null>)
         if (shooting) {
           const s = shooting;
           const tail = ctx!.createLinearGradient(s.x, s.y, s.x - s.vx * 14, s.y - s.vy * 14);
-          tail.addColorStop(0, "rgba(255,255,255,0.9)");
-          tail.addColorStop(1, "rgba(255,255,255,0)");
+          tail.addColorStop(0, "rgba(8,122,101,0.8)");
+          tail.addColorStop(1, "rgba(8,122,101,0)");
           ctx!.globalAlpha = s.life;
           ctx!.strokeStyle = tail;
           ctx!.lineWidth = 1.4;

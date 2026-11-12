@@ -3,22 +3,23 @@
 /* Scan shared UI package so Tailwind emits classes used by @orion/ui. */
 @source "../../../../packages/ui/src";
 
-/* Marketing-site tokens. Additive only — they introduce new utilities
-   (font-display, bg-night, text-aurora …) and leave the app's styles untouched. */
+/* Marketing-site tokens ("cloud white"). Additive only — they introduce new
+   utilities (font-display, bg-cloud, text-ink …) and leave the app's styles untouched. */
 @theme {
   --font-display: var(--font-instrument), Georgia, serif;
   --font-body: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-code: var(--font-geist-mono), ui-monospace, monospace;
 
-  --color-night: #04070a;
-  --color-night-2: #0a1013;
-  --color-night-3: #111a1d;
-  --color-star: #eef4f1;
-  --color-haze: #8fa19c;
+  --color-cloud: #f6f8f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef3f1;
+  --color-ink: #0c1a17;
+  --color-mist: #5b6b66;
   --color-aurora: #19d3ae;
-  --color-aurora-soft: #9ff2dc;
-  --color-gold: #e9c47a;
-  --color-ember: #ff7a59;
+  --color-aurora-deep: #087a65;
+  --color-aurora-soft: #c9f5ea;
+  --color-gold: #b8862a;
+  --color-ember: #e0532f;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }

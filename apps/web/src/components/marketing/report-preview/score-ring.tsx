@@ -19,7 +19,7 @@ export function ScoreRing({ score }: { score: number }) {
             <stop offset="1" stopColor="#e9c47a" />
           </linearGradient>
         </defs>
-        <circle cx="64" cy="64" r="54" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="7" />
+        <circle cx="64" cy="64" r="54" fill="none" stroke="rgba(12,26,23,0.08)" strokeWidth="7" />
         <motion.circle
           cx="64"
           cy="64"
@@ -39,7 +39,7 @@ export function ScoreRing({ score }: { score: number }) {
           <p className="font-display text-6xl leading-none">
             <CountUp value={score} />
           </p>
-          <p className="kicker mt-1 text-[0.65rem] text-haze">out of 100</p>
+          <p className="kicker mt-1 text-[0.65rem] text-mist">out of 100</p>
         </div>
       </div>
     </div>

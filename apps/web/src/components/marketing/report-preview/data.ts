@@ -17,7 +17,7 @@ export const SAMPLE_ACTIONS = [
 ] as const;
 
 export function scoreTone(score: number) {
-  if (score >= 75) return { bar: "bg-aurora", text: "text-aurora" };
+  if (score >= 75) return { bar: "bg-aurora", text: "text-aurora-deep" };
   if (score >= 55) return { bar: "bg-gold", text: "text-gold" };
   return { bar: "bg-ember", text: "text-ember" };
 }

@@ -14,7 +14,7 @@ export function Pillars() {
   return (
     <section className="relative px-3 pt-32 sm:px-8 sm:pt-44">
       <div className="mx-auto max-w-7xl px-2 sm:px-0">
-        <p className="kicker text-haze">(02) What we do</p>
+        <p className="kicker text-mist">(02) What we do</p>
         <SplitText
           className="mt-6 max-w-4xl font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[0.95] tracking-[-0.025em]"
           segments={[
@@ -23,7 +23,7 @@ export function Pillars() {
           ]}
         />
         <Reveal delay={0.2}>
-          <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-haze">
+          <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-mist">
             One legal home for the messy, exciting, slightly terrifying business of building a startup.
           </p>
         </Reveal>

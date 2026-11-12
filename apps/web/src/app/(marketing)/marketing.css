@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────
-   Orion marketing — "night sky" art direction.
+   Orion marketing — "cloud white" art direction.
    Tokens live in globals.css (@theme); this file holds effects that
    are awkward as utilities: grain, aurora, marquee, spotlight, shine.
    ───────────────────────────────────────────────────────────── */
@@ -7,25 +7,25 @@
 @import "lenis/dist/lenis.css";
 
 /* Paint the canvas behind overscroll so the bounce never flashes the
-   app's light background. */
+   app's own background. */
 :root:has(.marketing-page) {
-  background: #04070a;
-  color-scheme: dark;
+  background: #f6f8f7;
+  color-scheme: light;
 }
 
 .marketing-page {
   position: relative;
   min-height: 100vh;
-  background: var(--color-night);
-  color: var(--color-star);
+  background: var(--color-cloud);
+  color: var(--color-ink);
   font-family: var(--font-body);
   /* clip, not hidden — hidden would break position: sticky. */
   overflow-x: clip;
 }
 
 .marketing-page ::selection {
-  background: var(--color-aurora);
-  color: var(--color-night);
+  background: var(--color-aurora-soft);
+  color: var(--color-ink);
 }
 
 .marketing-page :focus-visible {
@@ -42,7 +42,8 @@
   inset: -50%;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 1.2s steps(6) infinite;
 }
@@ -57,7 +58,7 @@
 
 /* ─── Type helpers ─────────────────────────────────────────── */
 .text-aurora-gradient {
-  background: linear-gradient(100deg, #f4fffb 0%, #9ff2dc 35%, #19d3ae 70%, #0fa88a 100%);
+  background: linear-gradient(100deg, #0c3b33 0%, #087a65 35%, #12b394 70%, #19d3ae 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -65,7 +66,7 @@
 
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 1px rgba(238, 244, 241, 0.28);
+  -webkit-text-stroke: 1px rgba(12, 26, 23, 0.16);
 }
 
 .kicker {
@@ -85,17 +86,17 @@
 }
 
 .aurora-a {
-  background: radial-gradient(circle, rgba(25, 211, 174, 0.55), transparent 65%);
+  background: radial-gradient(circle, rgba(25, 211, 174, 0.28), transparent 65%);
   animation: drift-a 18s ease-in-out infinite alternate;
 }
 
 .aurora-b {
-  background: radial-gradient(circle, rgba(46, 84, 255, 0.4), transparent 65%);
+  background: radial-gradient(circle, rgba(120, 170, 255, 0.28), transparent 65%);
   animation: drift-b 22s ease-in-out infinite alternate;
 }
 
 .aurora-c {
-  background: radial-gradient(circle, rgba(233, 196, 122, 0.28), transparent 65%);
+  background: radial-gradient(circle, rgba(255, 196, 160, 0.3), transparent 65%);
   animation: drift-a 26s ease-in-out infinite alternate-reverse;
 }
 
@@ -112,16 +113,17 @@
 /* Faint perspective grid that fades toward the horizon. */
 .horizon-grid {
   background-image:
-    linear-gradient(rgba(159, 242, 220, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(159, 242, 220, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(12, 26, 23, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 26, 23, 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
 }
 
 /* ─── Glass surfaces ───────────────────────────────────────── */
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.6));
+  border: 1px solid rgba(12, 26, 23, 0.08);
+  box-shadow: 0 10px 30px -18px rgba(12, 26, 23, 0.25);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
@@ -138,7 +140,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
   transform: translateX(-120%);
   animation: shine 4.5s var(--ease-out-expo) infinite;
 }
@@ -161,7 +163,7 @@
   z-index: -1;
   border-radius: inherit;
   opacity: 0;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(25, 211, 174, 0.14), transparent 45%);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(25, 211, 174, 0.1), transparent 45%);
   transition: opacity 0.4s ease;
 }
 
@@ -174,7 +176,7 @@
   padding: 1px;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(159, 242, 220, 0.8), transparent 50%);
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(8, 122, 101, 0.55), transparent 50%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -223,7 +225,7 @@
 }
 
 .duotone img {
-  filter: grayscale(1) contrast(1.15) brightness(0.85);
+  filter: grayscale(1) contrast(1.05) brightness(1.08);
 }
 
 .duotone::after {
@@ -232,7 +234,7 @@
   inset: 0;
   background: var(--tint, #19d3ae);
   mix-blend-mode: color;
-  opacity: 0.85;
+  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -240,6 +242,8 @@
 .marquee {
   overflow: hidden;
   width: 100%;
+  /* The mask isolates blending, so give multiply-blended logos a backdrop. */
+  background: var(--color-cloud);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
@@ -249,6 +253,8 @@
   align-items: center;
   gap: 5rem;
   width: max-content;
+  /* The animated transform makes this the blend backdrop for the logos. */
+  background: var(--color-cloud);
   animation: marquee-scroll 38s linear infinite;
 }
 
@@ -261,15 +267,30 @@
   width: auto;
   max-width: 10rem;
   object-fit: contain;
-  /* Solid white silhouette on the night background; transparency kept. */
-  filter: brightness(0) invert(1);
-  opacity: 0.55;
+  /* Solid ink silhouette on the cloud background; transparency kept. */
+  filter: brightness(0);
+  opacity: 0.6;
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
 .partner-logo:hover {
   filter: none;
   opacity: 1;
+}
+
+/* Opaque logos (JPEGs etc.) — PartnerLogo detects the backdrop on load.
+   Multiply drops a white backdrop; inverting first drops a black one. */
+.partner-logo[data-bg="light"],
+.partner-logo[data-bg="light"]:hover {
+  /* No brightness cut here: the backdrop must stay pure white to vanish. */
+  filter: grayscale(1) contrast(1.6);
+  mix-blend-mode: multiply;
+}
+
+.partner-logo[data-bg="dark"],
+.partner-logo[data-bg="dark"]:hover {
+  filter: grayscale(1) invert(1) contrast(1.4);
+  mix-blend-mode: multiply;
 }
 
 @keyframes marquee-scroll {

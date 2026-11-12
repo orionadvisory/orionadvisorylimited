@@ -50,14 +50,14 @@ export function ChatDemo() {
   }, [inView]);
 
   return (
-    <div ref={ref} className="glass relative w-full max-w-md rounded-3xl p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
-      <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-        <span className="grid size-10 place-items-center rounded-full bg-aurora/15 text-aurora">
+    <div ref={ref} className="glass relative w-full max-w-md rounded-3xl p-5 shadow-[0_40px_100px_-30px_rgba(12,26,23,0.22)]">
+      <div className="flex items-center gap-3 border-b border-ink/10 pb-4">
+        <span className="grid size-10 place-items-center rounded-full bg-aurora/15 text-aurora-deep">
           <Sparkles className="size-5" aria-hidden="true" />
         </span>
         <div>
           <p className="font-medium">Orion co-pilot</p>
-          <p className="flex items-center gap-1.5 text-xs text-haze">
+          <p className="flex items-center gap-1.5 text-xs text-mist">
             <span className="pulse-dot size-1.5 rounded-full bg-aurora" /> Legal translator · online
           </p>
         </div>
@@ -74,12 +74,12 @@ export function ChatDemo() {
               transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
               className={cn(
                 "max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
-                m.from === "ai" ? "rounded-tl-sm bg-white/[0.06] text-star/90" : "ml-auto rounded-tr-sm bg-aurora text-night",
+                m.from === "ai" ? "rounded-tl-sm bg-ink/[0.06] text-ink/90" : "ml-auto rounded-tr-sm bg-ink text-cloud",
               )}
             >
               {m.text}
               {m.reviewed && (
-                <span className="mt-2.5 flex items-center gap-1.5 text-xs text-aurora">
+                <span className="mt-2.5 flex items-center gap-1.5 text-xs text-aurora-deep">
                   <UserRoundCheck className="size-3.5" aria-hidden="true" /> Reviewed by a human lawyer
                 </span>
               )}
@@ -92,13 +92,13 @@ export function ChatDemo() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex w-fit gap-1 rounded-2xl rounded-tl-sm bg-white/[0.06] px-4 py-3.5"
+              className="flex w-fit gap-1 rounded-2xl rounded-tl-sm bg-ink/[0.06] px-4 py-3.5"
               aria-label="Orion is typing"
             >
               {[0, 1, 2].map((d) => (
                 <motion.span
                   key={d}
-                  className="size-1.5 rounded-full bg-haze"
+                  className="size-1.5 rounded-full bg-mist"
                   animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
                   transition={{ duration: 0.9, repeat: Infinity, delay: d * 0.15 }}
                 />

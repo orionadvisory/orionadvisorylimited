@@ -22,7 +22,7 @@ export function Manifesto() {
   return (
     <section className="relative px-5 py-32 sm:px-8 sm:py-44">
       <div className="mx-auto max-w-6xl">
-        <p className="kicker mb-10 flex items-center gap-3 text-haze">
+        <p className="kicker mb-10 flex items-center gap-3 text-mist">
           <OrionMark size={16} /> (01) The problem
         </p>
         <p ref={ref} className="text-balance text-[clamp(2rem,4.6vw,4.4rem)] font-medium leading-[1.08] tracking-[-0.025em]">

@@ -1,6 +1,7 @@
 import { db } from "@orion/db";
 import { partners } from "@orion/db/schema";
 import { asc } from "drizzle-orm";
+import { PartnerLogo } from "./partner-logo";
 
 export default async function PartnersMarquee() {
   // A logo strip must never take the landing page down with it.
@@ -22,18 +23,11 @@ export default async function PartnersMarquee() {
 
   return (
     <section className="py-14" aria-label="Organisations we work with">
-      <p className="kicker mb-10 text-center text-haze/70">Trusted by teams we work with</p>
+      <p className="kicker mb-10 text-center text-mist/70">Trusted by teams we work with</p>
       <div className="marquee">
         <div className="marquee-track" aria-hidden={rows.length < 2 ? undefined : true}>
           {items.map((p, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`${p.id}-${i}`}
-              src={`/api/partners/${p.id}/logo`}
-              alt={p.name}
-              className="partner-logo"
-              loading="lazy"
-            />
+            <PartnerLogo key={`${p.id}-${i}`} src={`/api/partners/${p.id}/logo`} alt={p.name} />
           ))}
         </div>
       </div>

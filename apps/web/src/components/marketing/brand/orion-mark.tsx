@@ -17,15 +17,15 @@ export function OrionMark({ size = 28, className }: { size?: number; className?:
       <defs>
         <linearGradient id={`${id}-a`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#19d3ae" />
-          <stop offset="1" stopColor="#eef4f1" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#0c3b33" />
         </linearGradient>
         <linearGradient id={`${id}-b`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#eef4f1" stopOpacity="0.85" />
+          <stop offset="0" stopColor="#0c3b33" />
           <stop offset="1" stopColor="#19d3ae" />
         </linearGradient>
         <radialGradient id={`${id}-s`} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#9ff2dc" />
+          <stop offset="0" stopColor="#19d3ae" />
+          <stop offset="1" stopColor="#087a65" />
         </radialGradient>
       </defs>
       <path

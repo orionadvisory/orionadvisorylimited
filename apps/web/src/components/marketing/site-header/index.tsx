@@ -38,7 +38,7 @@ export function SiteHeader() {
           className={cn(
             "mx-auto flex max-w-6xl items-center justify-between rounded-full border py-2 pl-4 pr-2 transition-[background-color,border-color,box-shadow] duration-500 sm:pl-5",
             scrolled || open
-              ? "glass border-white/10 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
+              ? "glass border-ink/10 shadow-[0_12px_40px_-12px_rgba(12,26,23,0.14)]"
               : "border-transparent bg-transparent",
           )}
         >
@@ -52,7 +52,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative rounded-full px-4 py-2 text-sm text-star/75 transition-colors hover:text-star"
+                className="group relative rounded-full px-4 py-2 text-sm text-ink/75 transition-colors hover:text-ink"
               >
                 {link.label}
                 <span className="absolute inset-x-4 bottom-1.5 h-px origin-left scale-x-0 bg-aurora transition-transform duration-500 ease-out group-hover:scale-x-100" />
@@ -60,7 +60,7 @@ export function SiteHeader() {
             ))}
             <Link
               href="/signup"
-              className="group ml-2 inline-flex items-center gap-1.5 rounded-full bg-star px-5 py-2.5 text-sm font-medium text-night transition-colors hover:bg-aurora-soft"
+              className="group ml-2 inline-flex items-center gap-1.5 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-cloud transition-colors hover:bg-aurora-deep"
             >
               Get started
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
@@ -72,7 +72,7 @@ export function SiteHeader() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="grid size-11 place-items-center rounded-full border border-white/10 bg-white/5 md:hidden"
+            className="grid size-11 place-items-center rounded-full border border-ink/10 bg-ink/5 md:hidden"
           >
             {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
@@ -88,7 +88,7 @@ export function SiteHeader() {
             animate={{ clipPath: "circle(150% at 92% 4%)" }}
             exit={{ clipPath: "circle(0% at 92% 4%)" }}
             transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
-            className="fixed inset-0 z-40 flex flex-col justify-end bg-night px-6 pb-14 pt-28 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-end bg-cloud px-6 pb-14 pt-28 md:hidden"
           >
             <div className="aurora aurora-a left-[-20%] top-[10%] size-[80vw]" />
             <ul className="relative space-y-2">
@@ -102,16 +102,16 @@ export function SiteHeader() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-baseline justify-between border-b border-white/10 py-4 font-display text-5xl"
+                      className="flex items-baseline justify-between border-b border-ink/10 py-4 font-display text-5xl"
                     >
                       {link.label}
-                      <span className="kicker text-haze">0{i + 1}</span>
+                      <span className="kicker text-mist">0{i + 1}</span>
                     </Link>
                   </motion.div>
                 </li>
               ))}
             </ul>
-            <p className="kicker relative mt-10 text-haze">UK · US · Nigeria · Free Zones</p>
+            <p className="kicker relative mt-10 text-mist">UK · US · Nigeria · Free Zones</p>
           </motion.div>
         )}
       </AnimatePresence>
