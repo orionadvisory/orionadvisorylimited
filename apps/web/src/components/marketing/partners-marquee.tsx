@@ -3,10 +3,17 @@ import { partners } from "@orion/db/schema";
 import { asc } from "drizzle-orm";
 
 export default async function PartnersMarquee() {
-  const rows = await db
-    .select({ id: partners.id, name: partners.name })
-    .from(partners)
-    .orderBy(asc(partners.orderIndex), asc(partners.createdAt));
+  // A logo strip must never take the landing page down with it.
+  let rows: { id: string; name: string }[] = [];
+  try {
+    rows = await db
+      .select({ id: partners.id, name: partners.name })
+      .from(partners)
+      .orderBy(asc(partners.orderIndex), asc(partners.createdAt));
+  } catch (error) {
+    console.error("[partners-marquee] failed to load partners", error);
+    return null;
+  }
 
   if (rows.length === 0) return null;
 
@@ -14,13 +21,8 @@ export default async function PartnersMarquee() {
   const items = [...rows, ...rows];
 
   return (
-    <section
-      className="border-b border-[#17211b]/15 bg-[#fdfbf7] py-10"
-      aria-label="Organisations we work with"
-    >
-      <p className="mb-6 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#17211b]/50">
-        Trusted by teams we work with
-      </p>
+    <section className="py-14" aria-label="Organisations we work with">
+      <p className="kicker mb-10 text-center text-haze/70">Trusted by teams we work with</p>
       <div className="marquee">
         <div className="marquee-track" aria-hidden={rows.length < 2 ? undefined : true}>
           {items.map((p, i) => (

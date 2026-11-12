@@ -1,130 +1,320 @@
+/* ─────────────────────────────────────────────────────────────
+   Orion marketing — "night sky" art direction.
+   Tokens live in globals.css (@theme); this file holds effects that
+   are awkward as utilities: grain, aurora, marquee, spotlight, shine.
+   ───────────────────────────────────────────────────────────── */
+
+@import "lenis/dist/lenis.css";
+
+/* Paint the canvas behind overscroll so the bounce never flashes the
+   app's light background. */
+:root:has(.marketing-page) {
+  background: #04070a;
+  color-scheme: dark;
+}
+
 .marketing-page {
-  --paper: #fdfbf7;
-  --ink: #17211b;
-  --coral: #e95f44;
-  --yellow: #f4d66f;
-  --mint: #a9ddc3;
-  --blue: #a7c8ed;
-  background-color: var(--paper);
-  background-image:
-    linear-gradient(rgba(23, 33, 27, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 33, 27, 0.018) 1px, transparent 1px);
-  background-size: 32px 32px;
-  color: var(--ink);
-  overflow: hidden;
-}
-
-.marketing-page .display-type {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 900;
-}
-
-.marketing-page .ink-border {
-  border: 1px solid rgba(23, 33, 27, 0.3);
-}
-
-.marketing-page .sticker-shadow {
-  box-shadow: 0 8px 24px rgba(23, 33, 27, 0.14);
-}
-
-.marketing-page .sticker-shadow-sm {
-  box-shadow: 0 4px 12px rgba(23, 33, 27, 0.12);
-}
-
-.marketing-page .rough-card {
-  border: 1px solid rgba(23, 33, 27, 0.22);
-  border-radius: 1.25rem;
-  box-shadow: 0 12px 32px rgba(23, 33, 27, 0.09);
-}
-
-.marketing-page .scribble-underline {
   position: relative;
-  display: inline-block;
+  min-height: 100vh;
+  background: var(--color-night);
+  color: var(--color-star);
+  font-family: var(--font-body);
+  /* clip, not hidden — hidden would break position: sticky. */
+  overflow-x: clip;
 }
 
-.marketing-page .scribble-underline::after {
-  position: absolute;
-  right: -0.1em;
-  bottom: -0.14em;
-  left: -0.1em;
-  height: 0.22em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24' preserveAspectRatio='none'%3E%3Cpath d='M3 17C57 3 101 21 151 11c50-10 93 8 146-5' fill='none' stroke='%23ff6b4a' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-  content: "";
-}
-
-.marketing-page .wiggle-arrow {
-  transition: transform 150ms ease;
-}
-
-.marketing-page a:hover .wiggle-arrow {
-  transform: translateX(3px);
+.marketing-page ::selection {
+  background: var(--color-aurora);
+  color: var(--color-night);
 }
 
 .marketing-page :focus-visible {
-  outline: 2px solid var(--coral);
+  outline: 2px solid var(--color-aurora);
   outline-offset: 3px;
+  border-radius: 6px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marketing-page .wiggle-arrow {
-    animation: none;
-  }
-
-  .marketing-page *,
-  .marketing-page *::before,
-  .marketing-page *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
+/* Film grain across the whole site — the cheap trick that makes flat
+   gradients feel photographic. */
+.marketing-page::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
 }
 
-/* ─── Partner logo marquee ─────────────────────────────── */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* ─── Type helpers ─────────────────────────────────────────── */
+.text-aurora-gradient {
+  background: linear-gradient(100deg, #f4fffb 0%, #9ff2dc 35%, #19d3ae 70%, #0fa88a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(238, 244, 241, 0.28);
+}
+
+.kicker {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ─── Aurora blobs ─────────────────────────────────────────── */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.aurora-a {
+  background: radial-gradient(circle, rgba(25, 211, 174, 0.55), transparent 65%);
+  animation: drift-a 18s ease-in-out infinite alternate;
+}
+
+.aurora-b {
+  background: radial-gradient(circle, rgba(46, 84, 255, 0.4), transparent 65%);
+  animation: drift-b 22s ease-in-out infinite alternate;
+}
+
+.aurora-c {
+  background: radial-gradient(circle, rgba(233, 196, 122, 0.28), transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift-a {
+  from { transform: translate3d(-6%, -4%, 0) scale(1); }
+  to { transform: translate3d(8%, 6%, 0) scale(1.18); }
+}
+
+@keyframes drift-b {
+  from { transform: translate3d(5%, 4%, 0) scale(1.1); }
+  to { transform: translate3d(-7%, -5%, 0) scale(0.92); }
+}
+
+/* Faint perspective grid that fades toward the horizon. */
+.horizon-grid {
+  background-image:
+    linear-gradient(rgba(159, 242, 220, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(159, 242, 220, 0.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
+}
+
+/* ─── Glass surfaces ───────────────────────────────────────── */
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* ─── Buttons ──────────────────────────────────────────────── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shine 4.5s var(--ease-out-expo) infinite;
+}
+
+@keyframes shine {
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+/* ─── Spotlight cards (pointer position via --mx / --my) ───── */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(25, 211, 174, 0.14), transparent 45%);
+  transition: opacity 0.4s ease;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(159, 242, 220, 0.8), transparent 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 0.4s ease;
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Rotating conic border for the featured package. */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.conic-border {
+  position: relative;
+}
+
+.conic-border > .conic-ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: conic-gradient(from var(--angle), transparent 0deg, #19d3ae 70deg, #e9c47a 140deg, transparent 200deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-angle 6s linear infinite;
+}
+
+@keyframes spin-angle {
+  to { --angle: 360deg; }
+}
+
+/* ─── Imagery ──────────────────────────────────────────────── */
+/* Duotone: desaturate the photo, then wash it with the brand tint.
+   Low-res stock reads as deliberate art direction this way. */
+.duotone {
+  position: relative;
+  overflow: hidden;
+}
+
+.duotone img {
+  filter: grayscale(1) contrast(1.15) brightness(0.85);
+}
+
+.duotone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tint, #19d3ae);
+  mix-blend-mode: color;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ─── Partner logo marquee ─────────────────────────────────── */
 .marquee {
   overflow: hidden;
   width: 100%;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
+
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 5rem;
   width: max-content;
-  animation: marquee-scroll 32s linear infinite;
+  animation: marquee-scroll 38s linear infinite;
 }
+
 .marquee:hover .marquee-track {
   animation-play-state: paused;
 }
+
 .partner-logo {
-  height: 2.5rem;
+  height: 2.25rem;
   width: auto;
   max-width: 10rem;
   object-fit: contain;
-  /* Force every logo (white ones included) to a solid black silhouette so it
-     stays visible on the light background. Transparency is preserved. */
-  filter: brightness(0);
-  opacity: 0.8;
-  transition: filter 0.2s ease, opacity 0.2s ease;
+  /* Solid white silhouette on the night background; transparency kept. */
+  filter: brightness(0) invert(1);
+  opacity: 0.55;
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
+
 .partner-logo:hover {
   filter: none;
   opacity: 1;
 }
+
 @keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
+
+/* ─── Misc ─────────────────────────────────────────────────── */
+.mark-spin {
+  animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.scroll-cue {
+  animation: cue 2.2s var(--ease-out-expo) infinite;
+}
+
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(25, 211, 174, 0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(25, 211, 174, 0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .marketing-page::after,
+  .aurora,
+  .btn-shine::before,
+  .conic-border > .conic-ring,
+  .mark-spin,
+  .scroll-cue,
+  .pulse-dot {
+    animation: none !important;
+  }
+
   .marquee-track {
     animation: none;
     flex-wrap: wrap;

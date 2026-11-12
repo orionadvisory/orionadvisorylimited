@@ -1,28 +1,32 @@
-import HeroSection from "@/components/marketing/hero-section";
+import { Hero } from "@/components/marketing/hero";
+import { ReportPreview } from "@/components/marketing/report-preview";
 import PartnersMarquee from "@/components/marketing/partners-marquee";
-import SocialProofStrip from "@/components/marketing/social-proof-strip";
-import PillarsSection from "@/components/marketing/pillars-section";
-import JurisdictionsStrip from "@/components/marketing/jurisdictions-strip";
-import HowItWorksSection from "@/components/marketing/how-it-works-section";
-import WhyOrionSection from "@/components/marketing/why-orion-section";
-import PackagesTeaser from "@/components/marketing/packages-teaser";
-import CtaSection from "@/components/marketing/cta-section";
+import { Manifesto } from "@/components/marketing/manifesto";
+import { StatsBand } from "@/components/marketing/stats-band";
+import { Pillars } from "@/components/marketing/pillars";
+import { Jurisdictions } from "@/components/marketing/jurisdictions";
+import { Process } from "@/components/marketing/process";
+import { Copilot } from "@/components/marketing/copilot";
+import { PackagesSection } from "@/components/marketing/packages";
+import { FinalCta } from "@/components/marketing/final-cta";
 
 // Revalidate so newly added partner logos appear without a redeploy.
 export const revalidate = 60;
 
 export default function HomePage() {
   return (
-    <div>
-      <HeroSection />
+    <>
+      <Hero />
+      <ReportPreview />
       <PartnersMarquee />
-      <SocialProofStrip />
-      <PillarsSection />
-      <JurisdictionsStrip />
-      <HowItWorksSection />
-      <WhyOrionSection />
-      <PackagesTeaser />
-      <CtaSection />
-    </div>
+      <Manifesto />
+      <StatsBand />
+      <Pillars />
+      <Jurisdictions />
+      <Process />
+      <Copilot />
+      <PackagesSection />
+      <FinalCta />
+    </>
   );
 }

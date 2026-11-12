@@ -43,3 +43,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .legion/
+
+# design references (source images and samples — not shipped)
+design/
