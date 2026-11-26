@@ -1,0 +1,6 @@
+import { ChartNoAxesCombined } from "lucide-react";
+import { ModulePage } from "@/components/dashboard/workspace/module-page";
+
+export default function InvestmentPage() {
+  return <ModulePage title="Investment" accent="readiness" icon={ChartNoAxesCombined} description="Reuse your health check, entities, ownership and documents to find diligence gaps—without another long questionnaire." note="Readiness indicates preparation status only. It is not a guarantee of funding or investor approval." stats={[{label:"Ready for review",value:"—",hint:"Not yet assessed"},{label:"Needs attention",value:"—",hint:"Not yet assessed"},{label:"Missing information",value:"—",hint:"Not yet assessed"},{label:"Verified",value:"—",hint:"Not yet assessed"}]} items={[{title:"Corporate structure",detail:"Confirm entity profiles and relationships before this area can be reviewed.",meta:"Structure · Reuses entity records",status:"Missing information"},{title:"Ownership and governance",detail:"Add the shareholder register, founder agreements and relevant approvals.",meta:"Governance · Reuses vault evidence",status:"Needs confirmation"},{title:"Legal health summary",detail:"Your health check results will feed into the readiness pack once this module is available.",meta:"Legal health · Existing workspace data",status:"Needs confirmation"}]} />;
+}

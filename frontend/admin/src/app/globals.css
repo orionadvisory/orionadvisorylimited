@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Shared Orion tokens — same palette, radii and type as the founder app. */
+@import "../../../ui/src/theme.css";
+
+/* Scan shared UI package so Tailwind emits classes used by @orion/ui. */
+@source "../../../../frontend/ui/src";
+
+/*
+ * Re-point the legacy palettes used across admin forms onto the Orion brand,
+ * so existing `indigo-*` accents render as Orion teal and `gray-*` neutrals
+ * render warm, without rewriting every form.
+ */
+@theme {
+  --color-indigo-50: #eef7f5;
+  --color-indigo-100: #d9ede8;
+  --color-indigo-200: #b5dbd2;
+  --color-indigo-300: #86c2b5;
+  --color-indigo-400: #4d9f90;
+  --color-indigo-500: #1f8678;
+  --color-indigo-600: #0f766e;
+  --color-indigo-700: #0b5f58;
+  --color-indigo-800: #0a4c47;
+  --color-indigo-900: #083b37;
+
+  --color-gray-50: #faf7f2;
+  --color-gray-100: #f3eee6;
+  --color-gray-200: #e7dfd2;
+  --color-gray-300: #d8ccb9;
+  --color-gray-400: #756d61;
+  --color-gray-500: #6b6358;
+  --color-gray-600: #544d44;
+  --color-gray-700: #3d3832;
+  --color-gray-800: #27241f;
+  --color-gray-900: #1f2933;
+}
+
+:root {
+  --background: #f7f3ec;
+  --surface: #ffffff;
+  --border: #e7dfd2;
+  --primary: #1f2933;
+  --accent: #0f766e;
+  --muted: #697586;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f7f3ec;
+  color: #1f2933;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9beb0;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9f9384;
+}

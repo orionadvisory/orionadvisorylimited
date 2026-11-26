@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Shared Orion tokens (marketing palette + "Orion bento" product palette,
+   fonts, radii, shadows). Single source of truth for web and admin. */
+@import "../../../ui/src/theme.css";
+
+/* Scan shared UI package so Tailwind emits classes used by @orion/ui. */
+@source "../../../../frontend/ui/src";
+
+:root {
+  --background: #f7f3ec;
+  --surface: #ffffff;
+  --border: #e7dfd2;
+  --primary: #1f2933;
+  --accent: #0f766e;
+  --muted: #697586;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 34rem),
+    linear-gradient(135deg, #fbf7ef 0%, #f7f3ec 42%, #eef4ef 100%);
+  color: #1f2933;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9beb0;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9f9384;
+}

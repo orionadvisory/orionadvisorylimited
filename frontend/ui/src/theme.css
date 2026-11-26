@@ -1,0 +1,73 @@
+/*
+ * Orion design tokens ("Orion bento").
+ *
+ * Shared by frontend/web and frontend/admin. Each app's globals.css imports
+ * this file right after `@import "tailwindcss"`, so every token below becomes
+ * a Tailwind v4 utility (bg-canvas, text-ink, border-line, rounded-bento …).
+ *
+ * Contrast notes (WCAG AA, normal text ≥ 4.5:1):
+ *  - text-mist on white / canvas            ≈ 5.6 / 5.0
+ *  - text-brand on white / brand-soft       ≈ 5.5 / 4.6
+ *  - text-gold-deep on gold-soft            ≈ 5.1
+ *  - text-ember-deep on ember-soft          ≈ 5.0
+ *  - `gold`, `ember`, `aurora` are accent fills — never body text on light.
+ */
+@theme {
+  /* Typography. `--font-instrument` / `--font-geist*` are provided by next/font
+     in each app; the named fallbacks keep things legible if they are absent. */
+  --font-display: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  --font-body: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-code: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Marketing-site palette (values unchanged — the marketing pages use these). */
+  --color-cloud: #f6f8f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef3f1;
+  --color-ink: #0c1a17;
+  --color-mist: #5b6b66;
+  --color-aurora: #19d3ae;
+  --color-aurora-deep: #087a65;
+  --color-aurora-soft: #c9f5ea;
+  --color-gold: #b8862a;
+  --color-ember: #e0532f;
+
+  /* Product (dashboard / admin) palette. */
+  --color-canvas: #f7f3ec;
+  --color-canvas-deep: #efe7da;
+  --color-line: #e7dfd2;
+  --color-line-strong: #d8ccb9;
+  --color-ink-soft: #1f2933;
+  --color-ink-raised: #17241f;
+  --color-brand: #0f766e;
+  --color-brand-hover: #0b5f58;
+  --color-brand-soft: #d9ede8;
+  --color-gold-soft: #f5e7c9;
+  --color-gold-deep: #7a5a14;
+  --color-ember-soft: #f9ddd2;
+  --color-ember-deep: #a5341a;
+
+  --radius-bento: 28px;
+  --radius-bento-sm: 20px;
+
+  --shadow-bento: 0 1px 2px rgb(12 26 23 / 0.04), 0 8px 24px -12px rgb(12 26 23 / 0.08);
+  --shadow-bento-lift: 0 2px 4px rgb(12 26 23 / 0.05), 0 18px 40px -18px rgb(12 26 23 / 0.18);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* App canvas used by the dashboard + admin shells. */
+@utility bg-orion-canvas {
+  background:
+    radial-gradient(circle at 0% 0%, rgb(15 118 110 / 0.07), transparent 32rem),
+    radial-gradient(circle at 100% 0%, rgb(184 134 42 / 0.06), transparent 28rem),
+    var(--color-canvas);
+}
+
+/* Consistent, visible keyboard focus for every interactive primitive. */
+@utility focus-ring {
+  outline: none;
+  &:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}

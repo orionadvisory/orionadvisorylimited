@@ -1,0 +1,33 @@
+{
+  "name": "@orion/session",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/session.ts",
+    "./admin": "./src/admin.ts",
+    "./api": "./src/api.ts",
+    "./bff": "./src/bff.ts",
+    "./credentials": "./src/credentials.ts",
+    "./proxy": "./src/proxy.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@orion/api": "workspace:*",
+    "@orion/contracts": "workspace:*",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5",
+    "vitest": "^5.1.1"
+  },
+  "peerDependencies": {
+    "next": "16.2.2",
+    "react": "19.2.4"
+  }
+}
