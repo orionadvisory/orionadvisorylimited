@@ -1,0 +1,11 @@
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/.env*
+!**/.env.example
+.git
+.legion
+design
+*.md
+!README.md
